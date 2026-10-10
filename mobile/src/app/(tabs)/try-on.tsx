@@ -1,0 +1,12 @@
+import * as ImagePicker from 'expo-image-picker';
+import { Image, Text, View } from 'react-native';
+import { products, sizes } from '../../features/catalog/products';
+import { fitFor, recommend } from '../../features/fit/fit';
+import { useApp } from '../../features/state/AppState';
+import { Button, C, Card, Label, Page, Pill, s } from '../../features/ui/Kit';
+
+export default function TryOn() {
+  const { profile, setProfile, productId, selectedSize, setSelectedSize } = useApp(); const product = products.find(p => p.id === productId) ?? products[0]; const fit = fitFor(product, profile, selectedSize), rec = recommend(product, profile); const width = Math.min(235, 125 + Math.max(0, fit.ease) * 3);
+  async function choosePhoto() { const res = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ['images'], allowsEditing: true, quality: .8 }); if (!res.canceled) setProfile({ ...profile, photoUri: res.assets[0].uri }); }
+  return <Page eyebrow="VISUAL FIT REFERENCE · DEMO" title="试穿你选的尺码"><View style={s.row}>{sizes.map(size => <Pill key={size} title={size} selected={size === selectedSize} onPress={() => setSelectedSize(size)} />)}</View><Card><View style={{ height: 330, alignItems: 'center', justifyContent: 'center', backgroundColor: '#DDD3C4', overflow: 'hidden' }}>{profile.photoUri ? <Image source={{ uri: profile.photoUri }} resizeMode="contain" style={{ width: '100%', height: '100%', position: 'absolute' }} /> : <View style={{ alignItems: 'center' }}><View style={{ width: 62, height: 62, borderRadius: 31, backgroundColor: '#8E8071' }} /><View style={{ width: 90, height: 210, backgroundColor: '#8E8071', borderRadius: 35, marginTop: 6 }} /></View>}<View style={{ position: 'absolute', top: 120, width, height: 130, borderRadius: 24, backgroundColor: product.color, opacity: .72, borderWidth: 2, borderColor: C.ink, alignItems: 'center', justifyContent: 'center' }}><Text style={{ color: C.ink, fontWeight: '900' }}>{selectedSize}</Text></View><Text style={{ position: 'absolute', bottom: 10, color: C.ink, fontSize: 11, fontWeight: '800', backgroundColor: C.bg, padding: 5 }}>服装轮廓示意 · 非 AI 生成试穿图</Text></View><Label>当前选择 {selectedSize} · 推荐 {rec.size}</Label><Text style={{ fontSize: 26, fontWeight: '900', color: fit.ease > 22 ? C.orange : C.ink }}>{fit.label}</Text><Text style={s.body}>{fit.detail} 胸围余量 {fit.ease} cm。</Text></Card><Button title={profile.photoUri ? '更换照片' : '从相册选择照片'} onPress={choosePhoto} /><Text style={s.body}>照片只保存在本机。此图用叠加轮廓展示尺码差异，不能反映真实布料垂坠、肩线或身体姿态。</Text></Page>;
+}

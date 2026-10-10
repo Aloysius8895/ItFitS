@@ -1,0 +1,15 @@
+# Local backups and generated files
+.local-backups/
+.thumbnail
+/screenshots/
+/uploads/
+
+# Expo project
+mobile/node_modules/
+mobile/.expo/
+mobile/dist/
+mobile/web-build/
+mobile/expo-env.d.ts
+mobile/ios/
+mobile/android/
+mobile/*.tsbuildinfo

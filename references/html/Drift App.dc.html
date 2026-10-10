@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#D9D2C5;-webkit-font-smoothing:antialiased}a{color:#161513}a:hover{color:#FF5F0F}*{box-sizing:border-box}button{font:inherit}</style>
+</helmet>
+<div style="max-width:440px;margin:0 auto;min-height:100vh;background:#E9E3D8;color:#161513;font-family:Archivo,sans-serif;position:relative;padding-bottom:84px;overflow-x:hidden">
+
+<div style="display:flex;justify-content:space-between;align-items:center;padding:18px 20px 0">
+  <div style="font-family:Anton,sans-serif;font-size:22px;letter-spacing:.02em">DRIFT</div>
+  <div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:11px;letter-spacing:.06em;white-space:nowrap">
+    <span style="width:7px;height:7px;border-radius:50%;background:#FF5F0F"></span>SYNCED · THU 09
+  </div>
+</div>
+
+<sc-if value="{{ isToday }}" hint-placeholder-val="{{ true }}">
+<div style="padding:22px 20px 0">
+  <div style="font-family:Anton,sans-serif;font-size:58px;line-height:.9">ENERGY</div>
+  <div style="display:flex;align-items:flex-end;gap:14px;margin-top:4px">
+    <div style="font-family:Anton,sans-serif;font-size:170px;line-height:1.05;letter-spacing:-.01em">{{ energyNow }}</div>
+    <div style="font-weight:700;font-size:12px;letter-spacing:.05em;padding-bottom:10px;line-height:1.5">NOW / 100<br><span style="color:#6E6A62">11:20 · {{ todayPlanLabel }}</span></div>
+  </div>
+  <div style="margin-top:26px;display:flex;justify-content:space-between;gap:12px;white-space:nowrap;font-weight:700;font-size:11px;letter-spacing:.05em"><span>FORECAST · TODAY</span><span style="color:#6E6A62">● EVENTS</span></div>
+  <svg viewBox="0 0 350 170" style="width:100%;display:block;margin-top:10px;overflow:visible">
+    <g stroke="#161513" stroke-opacity=".35" stroke-dasharray="2 4" stroke-width="1"><line x1="1" y1="0" x2="1" y2="160"></line><line x1="87.5" y1="0" x2="87.5" y2="160"></line><line x1="175" y1="0" x2="175" y2="160"></line><line x1="262.5" y1="0" x2="262.5" y2="160"></line><line x1="349" y1="0" x2="349" y2="160"></line></g>
+    <line x1="{{ nowX }}" y1="0" x2="{{ nowX }}" y2="160" stroke="#161513" stroke-width="1.5"></line>
+    <path d="{{ todayPath }}" fill="none" stroke="#161513" stroke-width="3.5" stroke-linecap="round"></path>
+    <path d="{{ todayDots }}" fill="#161513"></path>
+    <circle cx="{{ defX }}" cy="{{ defY }}" r="8" fill="#FF5F0F" stroke="#161513" stroke-width="2.5"></circle>
+    <text x="{{ defX }}" y="{{ defLabelY }}" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="10" letter-spacing=".5">DEFENSE {{ defScore }}</text>
+    <line x1="0" y1="160" x2="350" y2="160" stroke="#161513" stroke-width="1.5"></line>
+  </svg>
+  <div style="display:flex;justify-content:space-between;font-weight:700;font-size:11px;margin-top:8px"><span>07</span><span>11</span><span>15</span><span>19</span><span>23</span></div>
+  <div style="margin-top:24px;border-top:1.5px solid #161513">
+    <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #161513;font-weight:700;font-size:13px;letter-spacing:.04em"><span>SLEEP LAST NIGHT</span><span>6.2 H</span></div>
+    <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #161513;font-weight:700;font-size:13px;letter-spacing:.04em"><span>SLEEP DEBT · 7 DAYS</span><span>3.4 H</span></div>
+    <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #161513;font-weight:700;font-size:13px;letter-spacing:.04em"><span>LOWEST POINT</span><span>{{ lowPoint }}</span></div>
+  </div>
+</div>
+<sc-if value="{{ hasClash }}" hint-placeholder-val="{{ true }}">
+<div onClick="{{ goPlan }}" style="margin-top:30px;background:#FF5F0F;cursor:pointer;padding:0 0 18px">
+  <div style="font-family:Anton,sans-serif;font-size:132px;line-height:.86;margin-left:-6px;white-space:nowrap;padding-top:6px">CLASH</div>
+  <div style="padding:10px 20px 0;font-weight:600;font-size:15px;line-height:1.4;text-wrap:pretty">Thesis defense at 16:00 lands in your afternoon slump. Forecast energy {{ defScore }}/100.</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0;font-weight:800;font-size:13px;letter-spacing:.05em"><span>COMPARE PLANS</span><span style="font-size:22px">→</span></div>
+</div>
+</sc-if>
+<sc-if value="{{ isSorted }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ goSchedule }}" style="margin-top:30px;background:#161513;color:#E9E3D8;cursor:pointer;padding:0 0 18px">
+  <div style="font-family:Anton,sans-serif;font-size:132px;line-height:.86;margin-left:-6px;white-space:nowrap;padding-top:6px;color:#FF5F0F">LOCKED</div>
+  <div style="padding:10px 20px 0;font-weight:600;font-size:15px;line-height:1.4">{{ lockedName }} plan is set. Defense forecast now {{ defScore }}/100.</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0;font-weight:800;font-size:13px;letter-spacing:.05em"><span>VIEW SCHEDULE</span><span style="font-size:22px">→</span></div>
+</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ isPlan }}" hint-placeholder-val="{{ false }}">
+<div style="padding:22px 20px 0">
+  <div style="font-weight:700;font-size:12px;letter-spacing:.05em;color:#6E6A62">DECISION · 16:00 THESIS DEFENSE</div>
+  <div style="font-family:Anton,sans-serif;font-size:58px;line-height:.9;margin-top:8px">PICK A<br>PLAN</div>
+  <div style="margin-top:22px;border-top:1.5px solid #161513">
+    <sc-for list="{{ planRows }}" as="p" hint-placeholder-count="3">
+      <div onClick="{{ p.pick }}" style="display:flex;align-items:center;gap:14px;padding:14px 14px;border-bottom:1px solid #161513;background:{{ p.bg }};color:{{ p.fg }};cursor:pointer;transition:background .2s">
+        <div style="font-family:Anton,sans-serif;font-size:26px;width:22px">{{ p.letter }}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:800;font-size:14px;letter-spacing:.05em">{{ p.name }}</div>
+          <div style="font-size:13px;margin-top:3px;opacity:.8">{{ p.sub }}</div>
+        </div>
+        <div style="font-family:Anton,sans-serif;font-size:40px;line-height:1;color:{{ p.scoreColor }}">{{ p.score }}</div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="margin-top:22px;display:flex;justify-content:space-between;gap:12px;white-space:nowrap;font-weight:700;font-size:11px;letter-spacing:.05em"><span>ENERGY · {{ selName }}</span><span style="color:#6E6A62">- - KEEP GOING</span></div>
+  <svg viewBox="0 0 350 170" style="width:100%;display:block;margin-top:10px;overflow:visible">
+    <g stroke="#161513" stroke-opacity=".35" stroke-dasharray="2 4"><line x1="1" y1="0" x2="1" y2="160"></line><line x1="87.5" y1="0" x2="87.5" y2="160"></line><line x1="175" y1="0" x2="175" y2="160"></line><line x1="262.5" y1="0" x2="262.5" y2="160"></line><line x1="349" y1="0" x2="349" y2="160"></line></g>
+    <path d="{{ basePath }}" fill="none" stroke="#6E6A62" stroke-width="2" stroke-dasharray="5 5"></path>
+    <path d="{{ selPath }}" fill="none" stroke="#161513" stroke-width="3.5" stroke-linecap="round"></path>
+    <circle cx="{{ defX }}" cy="{{ selDefY }}" r="8" fill="#FF5F0F" stroke="#161513" stroke-width="2.5"></circle>
+    <circle cx="{{ startX }}" cy="{{ startY }}" r="6" fill="#FF5F0F" stroke="#161513" stroke-width="2"></circle>
+    <line x1="0" y1="160" x2="350" y2="160" stroke="#161513" stroke-width="1.5"></line>
+  </svg>
+  <div style="display:flex;justify-content:space-between;font-weight:700;font-size:11px;margin-top:8px"><span>07</span><span>11</span><span>15</span><span>19</span><span>23</span></div>
+
+  <div style="display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;margin-top:26px;align-items:center">
+    <svg viewBox="0 0 90 172" style="width:96px;display:block">
+      <path d="{{ ticks }}" stroke="#161513" stroke-width="1.6"></path>
+      <line x1="45" y1="6" x2="45" y2="150" stroke="#161513" stroke-width="10" stroke-linecap="round"></line>
+      <line x1="45" y1="6" x2="45" y2="150" stroke="#E9E3D8" stroke-width="5" stroke-linecap="round"></line>
+      <line x1="45" y1="{{ selKssY }}" x2="45" y2="152" stroke="#FF5F0F" stroke-width="5" stroke-linecap="round"></line>
+      <circle cx="45" cy="158" r="8" fill="#FF5F0F" stroke="#161513" stroke-width="2.5"></circle>
+      <g font-family="Archivo" font-weight="700" font-size="10" fill="#161513"><text x="4" y="14">9</text><text x="4" y="79">5</text><text x="4" y="144">1</text></g>
+    </svg>
+    <div>
+      <div style="font-weight:700;font-size:11px;letter-spacing:.05em">SLEEPINESS AT 16:00</div>
+      <div style="display:flex;align-items:baseline;gap:6px;margin-top:4px"><span style="font-family:Anton,sans-serif;font-size:64px;line-height:1">{{ selKss }}</span><span style="font-weight:700;font-size:13px">/ 9 KSS</span></div>
+      <div style="font-size:13px;font-weight:600;margin-top:2px">{{ selKssLabel }}</div>
+    </div>
+  </div>
+
+  <div style="margin-top:22px;border-top:1.5px solid #161513">
+    <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #161513;font-weight:700;font-size:13px;letter-spacing:.04em"><span>ENERGY AT DEFENSE</span><span>{{ selScore }} / 100</span></div>
+    <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #161513;font-weight:700;font-size:13px;letter-spacing:.04em"><span>PREP TIME LEFT</span><span>{{ selPrep }}</span></div>
+    <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #161513;font-weight:700;font-size:13px;letter-spacing:.04em"><span>SLEEP ONSET TONIGHT</span><span>{{ selOnset }}</span></div>
+  </div>
+  <div style="font-size:15px;line-height:1.45;font-weight:500;margin-top:16px;text-wrap:pretty">{{ selNote }}</div>
+</div>
+<div onClick="{{ lockPlan }}" style="margin-top:28px;background:#FF5F0F;cursor:pointer;padding:0 0 18px">
+  <div style="font-family:Anton,sans-serif;font-size:132px;line-height:.86;margin-left:-6px;white-space:nowrap;padding-top:6px">{{ lockWord }}</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 20px 0;font-weight:800;font-size:13px;letter-spacing:.05em"><span>{{ lockCta }}</span><span style="font-size:22px">→</span></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSchedule }}" hint-placeholder-val="{{ false }}">
+<div style="padding:22px 20px 0">
+  <div style="font-weight:700;font-size:12px;letter-spacing:.05em;color:#6E6A62">PLAN · {{ todayPlanLabel }}</div>
+  <div style="font-family:Anton,sans-serif;font-size:58px;line-height:.9;margin-top:8px">SCHEDULE</div>
+  <div style="display:flex;justify-content:space-between;gap:12px;white-space:nowrap;font-weight:700;font-size:11px;letter-spacing:.05em;margin-top:22px;padding-bottom:8px;border-bottom:1.5px solid #161513"><span>TIME · EVENT</span><span>FORECAST ENERGY</span></div>
+  <sc-for list="{{ schedule }}" as="e" hint-placeholder-count="6">
+    <div onClick="{{ e.open }}" style="display:grid;grid-template-columns:52px minmax(0,1fr) 110px;gap:10px;align-items:center;padding:14px 0;border-bottom:1px solid #161513;cursor:{{ e.cursor }}">
+      <div style="font-family:Anton,sans-serif;font-size:20px">{{ e.t }}</div>
+      <div style="min-width:0">
+        <div style="font-weight:700;font-size:14px">{{ e.n }}</div>
+        <div style="font-weight:700;font-size:10px;letter-spacing:.06em;margin-top:3px;color:{{ e.kindColor }}">{{ e.k }}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="flex:1;height:10px;border-radius:5px;background:#D3CCBF;overflow:hidden"><div style="height:100%;width:{{ e.w }};border-radius:5px;background:{{ e.barColor }}"></div></div>
+        <div style="font-family:Anton,sans-serif;font-size:18px;width:24px;text-align:right">{{ e.v }}</div>
+      </div>
+    </div>
+  </sc-for>
+  <div style="font-size:13px;font-weight:600;color:#6E6A62;margin-top:14px;line-height:1.4">Orange = forecast below 45. Tap the defense to revisit plans.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isBody }}" hint-placeholder-val="{{ false }}">
+<div style="padding:22px 20px 0">
+  <div style="font-weight:700;font-size:12px;letter-spacing:.05em;color:#6E6A62">FROM YOUR BAND · LAST 7 DAYS</div>
+  <div style="font-family:Anton,sans-serif;font-size:58px;line-height:.9;margin-top:8px">BODY</div>
+  <div style="margin-top:20px;border:1.5px solid #161513;border-radius:22px;padding:18px">
+    <div style="display:flex;justify-content:space-between;font-weight:800;font-size:12px;letter-spacing:.05em"><span>SLEEP</span><span style="display:flex;gap:10px;color:#6E6A62"><span><span style="color:#161513">●</span> SLEPT</span><span><span style="color:#FF5F0F">●</span> SHORT OF 8H</span></span></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;height:150px;margin-top:14px;padding:0 4px">
+      <sc-for list="{{ nights }}" as="n" hint-placeholder-count="7">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:5px">
+          <div style="width:20px;height:{{ n.oh }};border-radius:10px;background:#FF5F0F"></div>
+          <div style="width:20px;height:{{ n.bh }};border-radius:10px;background:#161513"></div>
+          <div style="width:20px;height:6px;border-radius:3px;background:#B9B2A6"></div>
+          <div style="font-weight:700;font-size:11px;margin-top:2px">{{ n.d }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:8px;margin-top:14px"><span style="font-family:Anton,sans-serif;font-size:46px;line-height:1">6.9H</span><span style="font-weight:700;font-size:13px">AVG SLEEP</span></div>
+  </div>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:12px">
+    <div style="border:1.5px solid #161513;border-radius:22px;padding:16px">
+      <div style="font-weight:800;font-size:12px;letter-spacing:.05em">ALERTNESS</div>
+      <svg viewBox="0 0 150 80" style="width:100%;display:block;margin-top:14px"><polyline points="{{ ecg }}" fill="none" stroke="#FF5F0F" stroke-width="2.4" stroke-linejoin="round"></polyline></svg>
+      <div style="display:flex;align-items:baseline;gap:5px;margin-top:10px"><span style="font-family:Anton,sans-serif;font-size:34px;line-height:1">48</span><span style="font-weight:700;font-size:12px">MS HRV</span></div>
+    </div>
+    <div style="border:1.5px solid #161513;border-radius:22px;padding:16px">
+      <div style="font-weight:800;font-size:12px;letter-spacing:.05em">PRESSURE</div>
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-top:6px">
+        <div style="padding-bottom:4px"><div style="font-family:Anton,sans-serif;font-size:34px;line-height:1">7.1</div><div style="font-weight:700;font-size:12px;margin-top:4px">HIGH</div></div>
+        <svg viewBox="0 0 90 172" style="width:62px;display:block">
+          <path d="{{ ticks }}" stroke="#161513" stroke-width="1.6"></path>
+          <line x1="45" y1="6" x2="45" y2="150" stroke="#161513" stroke-width="10" stroke-linecap="round"></line>
+          <line x1="45" y1="6" x2="45" y2="150" stroke="#E9E3D8" stroke-width="5" stroke-linecap="round"></line>
+          <line x1="45" y1="{{ bodyKssY }}" x2="45" y2="152" stroke="#FF5F0F" stroke-width="5" stroke-linecap="round"></line>
+          <circle cx="45" cy="158" r="8" fill="#FF5F0F" stroke="#161513" stroke-width="2.5"></circle>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:12px;border:1.5px solid #161513;border-radius:22px;padding:18px">
+    <div style="font-weight:800;font-size:12px;letter-spacing:.05em">MOVEMENT · TODAY</div>
+    <svg viewBox="0 0 320 90" style="width:100%;display:block;margin-top:12px;overflow:visible">
+      <path d="{{ movePath }}" fill="none" stroke="#161513" stroke-width="3" stroke-linecap="round"></path>
+      <circle cx="{{ moveA.x }}" cy="{{ moveA.y }}" r="7" fill="#FF5F0F" stroke="#161513" stroke-width="2"></circle>
+      <circle cx="{{ moveB.x }}" cy="{{ moveB.y }}" r="7" fill="#FF5F0F" stroke="#161513" stroke-width="2"></circle>
+    </svg>
+    <div style="display:flex;align-items:baseline;gap:8px;margin-top:10px"><span style="font-family:Anton,sans-serif;font-size:46px;line-height:1">6.2K</span><span style="font-weight:700;font-size:13px">STEPS SO FAR</span></div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCheck }}" hint-placeholder-val="{{ false }}">
+<div style="padding:22px 20px 0">
+  <div style="font-weight:700;font-size:12px;letter-spacing:.05em;color:#6E6A62">CHECK-IN · 11:20</div>
+  <div style="font-family:Anton,sans-serif;font-size:58px;line-height:.9;margin-top:8px">HOW AWAKE<br>ARE YOU?</div>
+  <div style="display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:4px;margin-top:22px">
+    <sc-for list="{{ kssBtns }}" as="b" hint-placeholder-count="9">
+      <button onClick="{{ b.pick }}" style="height:56px;border:1.5px solid #161513;border-radius:10px;background:{{ b.bg }};color:{{ b.fg }};font-family:Anton,sans-serif;font-size:22px;cursor:pointer;padding:0">{{ b.n }}</button>
+    </sc-for>
+  </div>
+  <div style="display:flex;justify-content:space-between;font-weight:700;font-size:10px;letter-spacing:.05em;margin-top:8px"><span>WIDE AWAKE</span><span>FIGHTING SLEEP</span></div>
+  <div style="font-weight:700;font-size:15px;margin-top:14px;min-height:20px">{{ kssText }}</div>
+  <div style="font-weight:800;font-size:12px;letter-spacing:.05em;margin-top:22px">CAFFEINE IN LAST 3H?</div>
+  <div style="display:flex;gap:8px;margin-top:10px">
+    <sc-for list="{{ cafBtns }}" as="c" hint-placeholder-count="2">
+      <button onClick="{{ c.pick }}" style="flex:1;height:48px;border:1.5px solid #161513;border-radius:24px;background:{{ c.bg }};color:{{ c.fg }};font-weight:800;font-size:13px;letter-spacing:.05em;cursor:pointer">{{ c.label }}</button>
+    </sc-for>
+  </div>
+  <sc-if value="{{ logged }}" hint-placeholder-val="{{ false }}">
+    <div style="margin-top:26px;border-top:1.5px solid #161513">
+      <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #161513;font-weight:700;font-size:13px;letter-spacing:.04em"><span>FORECAST SAID</span><span>{{ energyNow }}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #161513;font-weight:700;font-size:13px;letter-spacing:.04em"><span>YOU FEEL</span><span>{{ youScore }}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #161513;font-weight:700;font-size:13px;letter-spacing:.04em"><span>GAP</span><span>{{ gap }}</span></div>
+    </div>
+    <div style="font-weight:800;font-size:12px;letter-spacing:.05em;margin-top:24px">MODEL ACCURACY</div>
+    <div style="display:flex;align-items:flex-end;gap:10px"><span style="font-family:Anton,sans-serif;font-size:96px;line-height:.9">{{ accNow }}</span><span style="font-weight:700;font-size:13px;padding-bottom:8px">% · LEARNING YOU</span></div>
+    <svg viewBox="0 0 350 110" style="width:100%;display:block;margin-top:14px;overflow:visible">
+      <path d="{{ accPath }}" fill="none" stroke="#161513" stroke-width="3" stroke-linecap="round"></path>
+      <path d="{{ accDots }}" fill="#161513"></path>
+      <circle cx="{{ accLast.x }}" cy="{{ accLast.y }}" r="8" fill="#FF5F0F" stroke="#161513" stroke-width="2.5"></circle>
+      <line x1="0" y1="104" x2="350" y2="104" stroke="#161513" stroke-width="1.5"></line>
+    </svg>
+    <div style="display:flex;justify-content:space-between;font-weight:700;font-size:11px;margin-top:8px"><span>FRI</span><span>SAT</span><span>SUN</span><span>MON</span><span>TUE</span><span>WED</span><span>NOW</span></div>
+  </sc-if>
+</div>
+<div onClick="{{ submitCheck }}" style="margin-top:28px;background:{{ logBg }};color:{{ logFg }};cursor:pointer;padding:0 0 18px">
+  <div style="font-family:Anton,sans-serif;font-size:132px;line-height:.86;margin-left:-6px;white-space:nowrap;padding-top:6px">{{ logWord }}</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 20px 0;font-weight:800;font-size:13px;letter-spacing:.05em"><span>{{ logCta }}</span><span style="font-size:22px">→</span></div>
+</div>
+</sc-if>
+
+<div style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:440px;background:#161513;display:grid;grid-template-columns:repeat(5,1fr);z-index:10">
+  <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+    <button onClick="{{ t.go }}" style="height:64px;background:transparent;border:none;color:{{ t.color }};font-weight:800;font-size:11px;letter-spacing:.06em;white-space:nowrap;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px">
+      <span style="width:6px;height:6px;border-radius:50%;background:{{ t.dot }}"></span>{{ t.label }}
+    </button>
+  </sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const W = 350, CH = 160;
+const SC = {
+  keep: { name: 'KEEP GOING', sub: 'Push through prep until 16:00', letter: 'A', v: [58,70,78,77,71,63,52,44,38,34,31,36,41,39,33,26,20], kss: 7.4, prep: '2H 30M', onset: '23:40', note: 'Drowsiness peaks right as you present. Expect slower recall and roughly twice as many attention lapses.' },
+  rest: { name: 'REST FIRST', sub: '20-min nap at 13:30, then prep', letter: 'B', v: [58,70,78,77,71,63,50,60,66,67,60,55,52,48,40,33,26], kss: 4.1, prep: '2H 10M', onset: '00:10', note: 'A short nap clears sleep pressure before the defense. Costs 20 minutes of prep and nudges bedtime later.' },
+  shift: { name: 'RESHUFFLE', sub: 'Prep at your morning peak, sync after lunch', letter: 'C', v: [58,72,80,79,72,64,56,52,54,58,52,48,46,42,36,30,24], kss: 5.0, prep: '2H 30M', onset: '23:30', note: 'Hard thinking moves to 10:00 when you peak. The group sync absorbs the afternoon dip instead.' }
+};
+const KSS = ['', 'Extremely alert', 'Very alert', 'Alert', 'Rather alert', 'Neither alert nor sleepy', 'Some signs of sleepiness', 'Sleepy, no effort to stay awake', 'Sleepy, some effort to stay awake', 'Very sleepy, fighting sleep'];
+const pts = v => v.map((y, i) => [i / (v.length - 1) * W, 8 + (1 - y / 100) * (CH - 16)]);
+const at = (v, i) => { const a = Math.floor(i), f = i - a; return v[a] + (v[Math.min(a + 1, v.length - 1)] - v[a]) * f; };
+const yOf = y => 8 + (1 - y / 100) * (CH - 16);
+const xOf = i => i / 16 * W;
+function smooth(p) {
+  let d = `M${p[0][0].toFixed(1)},${p[0][1].toFixed(1)}`;
+  for (let i = 0; i < p.length - 1; i++) {
+    const p0 = p[i - 1] || p[i], p1 = p[i], p2 = p[i + 1], p3 = p[i + 2] || p2;
+    d += ` C${(p1[0] + (p2[0] - p0[0]) / 6).toFixed(1)},${(p1[1] + (p2[1] - p0[1]) / 6).toFixed(1)} ${(p2[0] - (p3[0] - p1[0]) / 6).toFixed(1)},${(p2[1] - (p3[1] - p1[1]) / 6).toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;
+  }
+  return d;
+}
+const dots = (arr, r) => arr.map(([x, y]) => `M${x - r},${y} a${r},${r} 0 1,0 ${2 * r},0 a${r},${r} 0 1,0 ${-2 * r},0`).join(' ');
+const kssY = k => 140 - (k - 1) / 8 * 130;
+let ticks = '';
+for (let k = 1; k <= 9; k += 0.5) { const y = kssY(k), w = k % 1 === 0 ? 14 : 8; ticks += `M${37 - w},${y} h${w} M53,${y} h${w} `; }
+const ECG = [0,0,1,-1,0,0,-16,22,-6,0,1,0,-2,0,0,-3,4,0,0,-12,16,-4,0,1,0,0,-1,-18,24,-8,0,0,2,0,0,-10,12,-2,0,0];
+const ecg = ECG.map((v, i) => `${(i / (ECG.length - 1) * 150).toFixed(1)},${40 + v * 1.4}`).join(' ');
+const MV = [70,60,30,48,20,62,74,40,28,55,35,18];
+const mvP = MV.map((y, i) => [10 + i / (MV.length - 1) * 300, y]);
+const NIGHTS = [['M',6.8],['T',7.9],['W',5.9],['T',7.2],['F',6.1],['S',8.3],['S',6.2]];
+const BASE = [
+  { t: '08:30', n: 'Statistics lecture', k: 'CLASS', i: 1.5 },
+  { t: '10:00', n: 'Group project sync', k: 'WORK', i: 3 },
+  { t: '12:15', n: 'Lunch', k: 'BREAK', i: 5.25 },
+  { t: '13:30', n: 'Defense slide prep', k: 'WORK', i: 6.5 },
+  { t: '16:00', n: 'Thesis defense', k: 'KEY EVENT', i: 9, key: true },
+  { t: '18:30', n: 'Gym', k: 'ACTIVE', i: 11.5 },
+  { t: '21:00', n: 'Reading', k: 'STUDY', i: 14 }
+];
+function scheduleFor(plan) {
+  if (plan === 'rest') return [BASE[0], BASE[1], BASE[2], { t: '13:30', n: 'Power nap · 20 min', k: 'REST · ADDED', i: 6.5, added: true }, { ...BASE[3], t: '13:50', i: 6.85 }, ...BASE.slice(4)];
+  if (plan === 'shift') return [BASE[0], { ...BASE[3], t: '10:00', i: 3, k: 'WORK · MOVED', added: true }, BASE[2], { ...BASE[1], t: '13:30', i: 6.5, k: 'WORK · MOVED', added: true }, ...BASE.slice(4)];
+  return BASE;
+}
+const ACC = [71, 74, 73, 78, 81, 84];
+
+class Component extends DCLogic {
+  state = { tab: 'today', sel: 'rest', locked: null, kss: null, caf: null, logged: false };
+  go(tab) { this.setState({ tab }); window.scrollTo(0, 0); }
+  renderVals() {
+    const s = this.state;
+    const plan = s.locked || 'keep';
+    const tv = SC[plan].v;
+    const nowI = 4.33;
+    const energyNow = Math.round(at(tv, nowI));
+    const defScore = Math.round(at(tv, 9));
+    let lowI = 9; for (let i = 5; i < 14; i++) if (tv[i] < tv[lowI]) lowI = i;
+    const evDots = BASE.filter(e => !e.key).map(e => [xOf(e.i), yOf(at(tv, e.i))]);
+    const sv = SC[s.sel].v;
+    const youScore = s.kss ? Math.round((10 - s.kss) / 9 * 100) : 0;
+    const gapN = Math.abs(energyNow - youScore);
+    const acc = s.logged ? [...ACC, Math.min(96, 84 + Math.max(0, 6 - Math.round(gapN / 4)))] : ACC;
+    const accP = acc.map((a, i) => [i / 6 * W, 100 - (a - 60) / 40 * 96]);
+    const tabs = [['today','TODAY'],['plan','PLAN'],['schedule','SCHEDULE'],['body','BODY'],['check','LOG']];
+    return {
+      isToday: s.tab === 'today', isPlan: s.tab === 'plan', isSchedule: s.tab === 'schedule', isBody: s.tab === 'body', isCheck: s.tab === 'check',
+      tabs: tabs.map(([k, l]) => ({ label: l, color: s.tab === k ? '#FF5F0F' : '#E9E3D8', dot: s.tab === k ? '#FF5F0F' : 'transparent', go: () => this.go(k) })),
+      energyNow, defScore, todayPlanLabel: SC[plan].name,
+      todayPath: smooth(pts(tv)), todayDots: dots(evDots, 4.5),
+      nowX: xOf(nowI), defX: xOf(9), defY: yOf(at(tv, 9)), defLabelY: yOf(at(tv, 9)) + (defScore < 50 ? -16 : 24),
+      lowPoint: `${7 + lowI}:00 · ${tv[lowI]}`,
+      hasClash: plan === 'keep', isSorted: plan !== 'keep', lockedName: SC[plan].name,
+      goPlan: () => this.go('plan'), goSchedule: () => this.go('schedule'),
+      planRows: Object.keys(SC).map(k => {
+        const on = s.sel === k, sc = Math.round(at(SC[k].v, 9));
+        return { letter: SC[k].letter, name: SC[k].name + (s.locked === k ? ' · LOCKED' : ''), sub: SC[k].sub, score: sc,
+          bg: on ? '#161513' : 'transparent', fg: on ? '#E9E3D8' : '#161513', scoreColor: on ? '#FF5F0F' : (sc < 45 ? '#C2410C' : '#161513'),
+          pick: () => this.setState({ sel: k }) };
+      }),
+      selName: SC[s.sel].name, basePath: smooth(pts(SC.keep.v)), selPath: smooth(pts(sv)),
+      selDefY: yOf(at(sv, 9)), startX: 0, startY: yOf(sv[0]),
+      ticks, selKss: SC[s.sel].kss.toFixed(1), selKssY: kssY(SC[s.sel].kss), selKssLabel: KSS[Math.round(SC[s.sel].kss)],
+      selScore: Math.round(at(sv, 9)), selPrep: SC[s.sel].prep, selOnset: SC[s.sel].onset, selNote: SC[s.sel].note,
+      lockWord: s.locked === s.sel ? 'SET' : 'LOCK IT',
+      lockCta: s.locked === s.sel ? 'PLAN ACTIVE · VIEW SCHEDULE' : `USE ${SC[s.sel].name}`,
+      lockPlan: () => { if (s.locked === s.sel) this.go('schedule'); else this.setState({ locked: s.sel }); },
+      schedule: scheduleFor(plan).map(e => {
+        const v = Math.round(at(tv, e.i)), low = v < 45;
+        return { ...e, v, w: v + '%', barColor: low ? '#FF5F0F' : '#161513', kindColor: e.key || e.added ? '#C2410C' : '#6E6A62',
+          cursor: e.key ? 'pointer' : 'default', open: () => { if (e.key) this.go('plan'); } };
+      }),
+      nights: NIGHTS.map(([d, h]) => ({ d, bh: (h / 9 * 100) + 'px', oh: Math.max(8, (8 - h) / 9 * 100 * 1.6) + 'px' })),
+      ecg, bodyKssY: kssY(7.1), movePath: smooth(mvP), moveA: { x: mvP[0][0], y: mvP[0][1] }, moveB: { x: mvP[11][0], y: mvP[11][1] },
+      kssBtns: [1,2,3,4,5,6,7,8,9].map(n => ({ n, bg: s.kss === n ? (n >= 7 ? '#FF5F0F' : '#161513') : 'transparent', fg: s.kss === n && n < 7 ? '#E9E3D8' : '#161513', pick: () => this.setState({ kss: n, logged: false }) })),
+      kssText: s.kss ? KSS[s.kss] : 'Tap a number. 1 = wide awake, 9 = fighting sleep.',
+      cafBtns: [['yes','YES'],['no','NO']].map(([k, l]) => ({ label: l, bg: s.caf === k ? '#161513' : 'transparent', fg: s.caf === k ? '#E9E3D8' : '#161513', pick: () => this.setState({ caf: k }) })),
+      logged: s.logged, youScore, gap: (youScore >= energyNow ? '+' : '−') + gapN,
+      accNow: acc[acc.length - 1], accPath: smooth(accP), accDots: dots(accP.slice(0, -1), 4), accLast: { x: accP[accP.length - 1][0], y: accP[accP.length - 1][1] },
+      logWord: s.logged ? 'THANKS' : 'LOG IT', logBg: s.kss ? '#FF5F0F' : '#CFC8BB', logFg: '#161513',
+      logCta: s.logged ? 'FORECAST UPDATED · BACK TO TODAY' : (s.kss ? 'SEND TO MODEL' : 'PICK A NUMBER FIRST'),
+      submitCheck: () => { if (s.logged) this.go('today'); else if (s.kss) this.setState({ logged: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

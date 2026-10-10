@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>body{margin:0;background:#D9D2C5;-webkit-font-smoothing:antialiased}a{color:#161513}a:hover{color:#FF5F0F}*{box-sizing:border-box}button{font:inherit}</style>
+</helmet>
+<div style="max-width:440px;margin:0 auto;min-height:100vh;background:#E9E3D8;color:#161513;font-family:Archivo,sans-serif;position:relative;padding-bottom:84px;overflow-x:hidden">
+
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 20px 0">
+  <div style="font-family:Anton,sans-serif;font-size:22px;letter-spacing:.02em">FITTED</div>
+  <div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:11px;letter-spacing:.06em;white-space:nowrap">
+    <span style="width:7px;height:7px;border-radius:50%;background:#FF5F0F"></span>PROFILE 96% COMPLETE
+  </div>
+</div>
+
+<sc-if value="{{ isFit }}" hint-placeholder-val="{{ true }}">
+<div style="padding:22px 20px 0">
+  <div style="font-weight:700;font-size:12px;letter-spacing:.05em;color:#6E6A62">MERINO CREW SWEATER · RELAXED</div>
+  <div style="font-family:Anton,sans-serif;font-size:58px;line-height:.9;margin-top:8px">YOUR SIZE</div>
+  <div style="display:flex;align-items:flex-end;gap:14px;margin-top:4px">
+    <div style="font-family:Anton,sans-serif;font-size:170px;line-height:1.05">{{ recSize }}</div>
+    <div style="font-weight:700;font-size:12px;letter-spacing:.05em;padding-bottom:22px;line-height:1.5">FIT SCORE {{ recScore }} / 100<br><span style="color:#6E6A62">CONFIDENCE HIGH</span></div>
+  </div>
+  <div style="margin-top:10px;display:flex;justify-content:space-between;gap:12px;white-space:nowrap;font-weight:700;font-size:11px;letter-spacing:.05em"><span>FIT SCORE BY SIZE</span><span style="color:#6E6A62">● TAP A SIZE</span></div>
+  <svg viewBox="0 0 350 170" style="width:100%;display:block;margin-top:10px;overflow:visible">
+    <g stroke="#161513" stroke-opacity=".35" stroke-dasharray="2 4"><line x1="20" y1="0" x2="20" y2="160"></line><line x1="97.5" y1="0" x2="97.5" y2="160"></line><line x1="175" y1="0" x2="175" y2="160"></line><line x1="252.5" y1="0" x2="252.5" y2="160"></line><line x1="330" y1="0" x2="330" y2="160"></line></g>
+    <path d="{{ fitPath }}" fill="none" stroke="#161513" stroke-width="3.5" stroke-linecap="round"></path>
+    <path d="{{ fitDots }}" fill="#161513"></path>
+    <circle cx="{{ selPt.x }}" cy="{{ selPt.y }}" r="9" fill="#FF5F0F" stroke="#161513" stroke-width="2.5"></circle>
+    <text x="{{ selPt.x }}" y="{{ selPt.ly }}" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="11">{{ selScore }}</text>
+    <line x1="0" y1="160" x2="350" y2="160" stroke="#161513" stroke-width="1.5"></line>
+  </svg>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);margin-top:6px">
+    <sc-for list="{{ sizeBtns }}" as="b" hint-placeholder-count="5">
+      <button onClick="{{ b.pick }}" style="height:44px;border:none;background:transparent;font-family:Anton,sans-serif;font-size:20px;color:{{ b.fg }};cursor:pointer;padding:0">{{ b.s }}</button>
+    </sc-for>
+  </div>
+  <div style="margin-top:14px;border-top:1.5px solid #161513">
+    <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #161513;font-weight:700;font-size:13px;letter-spacing:.04em"><span>SIMILAR BODIES KEPT {{ recSize }}</span><span>82%</span></div>
+    <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #161513;font-weight:700;font-size:13px;letter-spacing:.04em"><span>FABRIC STRETCH</span><span>LOW · 4%</span></div>
+    <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #161513;font-weight:700;font-size:13px;letter-spacing:.04em"><span>BRAND RUNS</span><span>HALF SIZE SMALL</span></div>
+  </div>
+</div>
+<div onClick="{{ goCompare }}" style="margin-top:30px;background:#FF5F0F;cursor:pointer;padding:0 0 18px">
+  <div style="font-family:Anton,sans-serif;font-size:132px;line-height:.86;margin-left:-6px;white-space:nowrap;padding-top:6px">COMPARE</div>
+  <div style="padding:10px 20px 0;font-weight:600;font-size:15px;line-height:1.4;text-wrap:pretty">Torn between M and L? See where each one pulls or hangs loose on your body.</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0;font-weight:800;font-size:13px;letter-spacing:.05em"><span>SIZE BY SIZE</span><span style="font-size:22px">→</span></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCompare }}" hint-placeholder-val="{{ false }}">
+<div style="padding:22px 20px 0">
+  <div style="font-weight:700;font-size:12px;letter-spacing:.05em;color:#6E6A62">GARMENT VS. YOUR BODY</div>
+  <div style="font-family:Anton,sans-serif;font-size:58px;line-height:.9;margin-top:8px">COMPARE<br>SIZES</div>
+  <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-top:20px">
+    <sc-for list="{{ sizeChips }}" as="b" hint-placeholder-count="5">
+      <button onClick="{{ b.pick }}" style="height:48px;border:1.5px solid #161513;border-radius:24px;background:{{ b.bg }};color:{{ b.fg }};font-family:Anton,sans-serif;font-size:20px;cursor:pointer;padding:0">{{ b.s }}</button>
+    </sc-for>
+  </div>
+  <div style="margin-top:24px">
+    <div style="font-weight:700;font-size:11px;letter-spacing:.05em">OVERALL FEEL · SIZE {{ selSize }}</div>
+    <div style="display:flex;align-items:baseline;gap:6px;margin-top:4px"><span style="font-family:Anton,sans-serif;font-size:64px;line-height:1.05">{{ selScore }}</span><span style="font-weight:700;font-size:13px">/ 100 FIT</span></div>
+    <div style="font-size:13px;font-weight:600">{{ selFeel }}</div>
+    <div style="position:relative;margin-top:22px;height:44px">
+      <div style="position:absolute;left:0;right:0;top:12px;height:14px;border-radius:7px;background:#D3CCBF"></div>
+      <div style="position:absolute;left:40%;width:20%;top:12px;height:14px;border-radius:7px;background:#161513"></div>
+      <div style="position:absolute;left:{{ feelPos }};top:4px;width:30px;height:30px;margin-left:-15px;border-radius:50%;background:#FF5F0F;border:3px solid #161513;transition:left .3s"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));font-weight:800;font-size:10px;letter-spacing:.05em;text-align:center">
+      <span style="text-align:left">TIGHT</span><span>SNUG</span><span>IDEAL</span><span>ROOMY</span><span style="text-align:right">LOOSE</span>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:space-between;gap:12px;white-space:nowrap;font-weight:700;font-size:11px;letter-spacing:.05em;margin-top:24px;padding-bottom:8px;border-bottom:1.5px solid #161513"><span>ZONE · EASE</span><span>TIGHT ← IDEAL → LOOSE</span></div>
+  <sc-for list="{{ zones }}" as="z" hint-placeholder-count="5">
+    <div style="display:grid;grid-template-columns:92px minmax(0,1fr);gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid #161513">
+      <div>
+        <div style="font-weight:800;font-size:13px;letter-spacing:.04em">{{ z.n }}</div>
+        <div style="font-weight:700;font-size:11px;margin-top:3px;color:{{ z.c }}">{{ z.ease }}</div>
+      </div>
+      <div style="position:relative;height:14px;border-radius:7px;background:#D3CCBF">
+        <div style="position:absolute;left:40%;width:20%;top:0;bottom:0;border-radius:7px;background:#161513;opacity:.18"></div>
+        <div style="position:absolute;left:50%;top:-4px;bottom:-4px;width:1.5px;background:#161513"></div>
+        <div style="position:absolute;left:{{ z.pos }};top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:{{ z.dot }};border:2.5px solid #161513;transition:left .3s"></div>
+      </div>
+    </div>
+  </sc-for>
+  <div style="font-size:15px;line-height:1.45;font-weight:500;margin-top:16px;text-wrap:pretty">{{ selNote }}</div>
+</div>
+<div onClick="{{ goTry }}" style="margin-top:28px;background:#FF5F0F;cursor:pointer;padding:0 0 18px">
+  <div style="font-family:Anton,sans-serif;font-size:132px;line-height:.86;margin-left:-6px;white-space:nowrap;padding-top:6px">TRY ON</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 20px 0;font-weight:800;font-size:13px;letter-spacing:.05em"><span>SEE SIZE {{ selSize }} ON YOU</span><span style="font-size:22px">→</span></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isTry }}" hint-placeholder-val="{{ false }}">
+<div style="padding:22px 20px 0">
+  <div style="font-weight:700;font-size:12px;letter-spacing:.05em;color:#6E6A62">VIRTUAL TRY-ON · REFERENCE ONLY</div>
+  <div style="font-family:Anton,sans-serif;font-size:58px;line-height:.9;margin-top:8px">ON YOU</div>
+  <div style="position:relative;margin-top:18px;height:440px;border:1.5px solid #161513;border-radius:22px;overflow:hidden;background:#D3CCBF">
+    <sc-if value="{{ hasPhoto }}" hint-placeholder-val="{{ false }}">
+      <div role="img" aria-label="Your photo" style="position:absolute;inset:0;background-size:cover;background-position:center;background-image:{{ photoBg }}"></div>
+    </sc-if>
+    <sc-if value="{{ noPhoto }}" hint-placeholder-val="{{ true }}">
+      <image-slot id="tryon-photo" shape="rect" placeholder="Take or choose a full-body photo"></image-slot>
+    </sc-if>
+    <div style="position:absolute;top:14px;left:14px;background:#161513;color:#E9E3D8;font-weight:800;font-size:12px;letter-spacing:.05em;padding:8px 14px;border-radius:18px;pointer-events:none;white-space:nowrap">SIZE {{ selSize }} · FIT {{ selScore }}</div>
+  </div>
+  <input ref="{{ camRef }}" type="file" accept="image/*" capture="environment" onChange="{{ onFile }}" style="display:none">
+  <input ref="{{ albumRef }}" type="file" accept="image/*" onChange="{{ onFile }}" style="display:none">
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin-top:12px">
+    <button onClick="{{ openCam }}" style="height:52px;border:1.5px solid #161513;border-radius:26px;background:#FF5F0F;color:#161513;font-weight:800;font-size:13px;letter-spacing:.05em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap"><span style="width:10px;height:10px;border-radius:50%;background:#161513"></span>{{ camLabel }}</button>
+    <button onClick="{{ openAlbum }}" style="height:52px;border:1.5px solid #161513;border-radius:26px;background:transparent;color:#161513;font-weight:800;font-size:13px;letter-spacing:.05em;cursor:pointer;white-space:nowrap">FROM ALBUM</button>
+  </div>
+  <div style="font-size:12px;font-weight:600;color:#6E6A62;margin-top:8px;line-height:1.4">Stand straight, arms slightly away from body, full body in frame.</div>
+  <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-top:14px">
+    <sc-for list="{{ sizeChips }}" as="b" hint-placeholder-count="5">
+      <button onClick="{{ b.pick }}" style="height:48px;border:1.5px solid #161513;border-radius:24px;background:{{ b.bg }};color:{{ b.fg }};font-family:Anton,sans-serif;font-size:20px;cursor:pointer;padding:0">{{ b.s }}</button>
+    </sc-for>
+  </div>
+  <div style="margin-top:20px;border-top:1.5px solid #161513">
+    <sc-for list="{{ zones }}" as="z" hint-placeholder-count="5">
+      <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #161513;font-weight:700;font-size:13px;letter-spacing:.04em"><span>{{ z.n }}</span><span style="color:{{ z.c }}">{{ z.word }}</span></div>
+    </sc-for>
+  </div>
+  <div style="font-size:13px;font-weight:600;color:#6E6A62;margin-top:14px;line-height:1.4">Rendering is a visual guide. Fit scores come from measurements, fabric and shopper feedback.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isBody }}" hint-placeholder-val="{{ false }}">
+<div style="padding:22px 20px 0">
+  <div style="font-weight:700;font-size:12px;letter-spacing:.05em;color:#6E6A62">FROM YOUR PHOTO + PROFILE</div>
+  <div style="font-family:Anton,sans-serif;font-size:58px;line-height:.9;margin-top:8px">BODY</div>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:20px">
+    <div style="border:1.5px solid #161513;border-radius:22px;padding:16px">
+      <div style="font-weight:800;font-size:12px;letter-spacing:.05em">HEIGHT</div>
+      <div style="display:flex;align-items:baseline;gap:5px;margin-top:10px"><span style="font-family:Anton,sans-serif;font-size:44px;line-height:1">172</span><span style="font-weight:700;font-size:12px">CM</span></div>
+    </div>
+    <div style="border:1.5px solid #161513;border-radius:22px;padding:16px">
+      <div style="font-weight:800;font-size:12px;letter-spacing:.05em">WEIGHT</div>
+      <div style="display:flex;align-items:baseline;gap:5px;margin-top:10px"><span style="font-family:Anton,sans-serif;font-size:44px;line-height:1">64</span><span style="font-weight:700;font-size:12px">KG</span></div>
+    </div>
+  </div>
+  <div style="margin-top:12px;border:1.5px solid #161513;border-radius:22px;padding:18px">
+    <div style="display:flex;justify-content:space-between;gap:10px;white-space:nowrap;font-weight:800;font-size:12px;letter-spacing:.05em"><span>SIZES KEPT · SIMILAR BODIES</span><span style="color:#6E6A62">N=1,240</span></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;height:200px;margin-top:18px;padding:0 10px">
+      <sc-for list="{{ kept }}" as="k" hint-placeholder-count="5">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:5px">
+          <div style="font-weight:800;font-size:11px">{{ k.p }}</div>
+          <div style="width:24px;height:{{ k.h }};border-radius:12px;background:{{ k.c }}"></div>
+          <div style="width:24px;height:6px;border-radius:3px;background:#B9B2A6"></div>
+          <div style="font-family:Anton,sans-serif;font-size:16px;margin-top:2px">{{ k.s }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="margin-top:12px;border-top:1.5px solid #161513">
+    <sc-for list="{{ measures }}" as="m" hint-placeholder-count="5">
+      <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #161513;font-weight:700;font-size:13px;letter-spacing:.04em"><span>{{ m.n }}</span><span>{{ m.v }}</span></div>
+    </sc-for>
+  </div>
+  <div style="font-size:13px;font-weight:600;color:#6E6A62;margin-top:14px;line-height:1.4">Estimated from your photo, refined by your inputs. Tap any value to correct it.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isReview }}" hint-placeholder-val="{{ false }}">
+<div style="padding:22px 20px 0">
+  <div style="font-weight:700;font-size:12px;letter-spacing:.05em;color:#6E6A62">{{ toReviewCount }} WAITING FOR REVIEW</div>
+  <div style="font-family:Anton,sans-serif;font-size:58px;line-height:.9;margin-top:8px">PURCHASES</div>
+  <div style="margin-top:18px;border-top:1.5px solid #161513">
+    <sc-for list="{{ purchases }}" as="p" hint-placeholder-count="4">
+      <div onClick="{{ p.pick }}" style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 14px;border-bottom:1px solid #161513;background:{{ p.bg }};color:{{ p.fg }};cursor:pointer;transition:background .2s">
+        <div style="min-width:0">
+          <div style="font-weight:800;font-size:14px;letter-spacing:.04em">{{ p.name }}</div>
+          <div style="font-size:12px;font-weight:600;margin-top:3px;opacity:.75">SIZE {{ p.size }} · {{ p.date }}</div>
+        </div>
+        <div style="font-weight:800;font-size:11px;letter-spacing:.05em;padding:7px 12px;border-radius:16px;white-space:nowrap;background:{{ p.chipBg }};color:{{ p.chipFg }};border:1.5px solid {{ p.chipBd }}">{{ p.status }}</div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="font-weight:700;font-size:12px;letter-spacing:.05em;color:#6E6A62;margin-top:30px">{{ curHeader }}</div>
+  <div style="font-family:Anton,sans-serif;font-size:58px;line-height:.9;margin-top:8px">HOW DID<br>IT FIT?</div>
+  <div style="display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:4px;margin-top:22px">
+    <sc-for list="{{ rateBtns }}" as="b" hint-placeholder-count="9">
+      <button onClick="{{ b.pick }}" style="height:56px;border:1.5px solid #161513;border-radius:10px;background:{{ b.bg }};color:{{ b.fg }};font-family:Anton,sans-serif;font-size:22px;cursor:pointer;padding:0">{{ b.n }}</button>
+    </sc-for>
+  </div>
+  <div style="display:flex;justify-content:space-between;font-weight:700;font-size:10px;letter-spacing:.05em;margin-top:8px;gap:8px;white-space:nowrap"><span>TOO TIGHT</span><span>PERFECT</span><span>TOO LOOSE</span></div>
+  <div style="font-weight:700;font-size:15px;margin-top:14px;min-height:20px">{{ rateText }}</div>
+  <div style="font-weight:800;font-size:12px;letter-spacing:.05em;margin-top:22px">ANY TROUBLE SPOTS?</div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
+    <sc-for list="{{ spotBtns }}" as="c" hint-placeholder-count="5">
+      <button onClick="{{ c.pick }}" style="height:44px;padding:0 18px;border:1.5px solid #161513;border-radius:22px;background:{{ c.bg }};color:{{ c.fg }};font-weight:800;font-size:12px;letter-spacing:.05em;cursor:pointer">{{ c.label }}</button>
+    </sc-for>
+  </div>
+  <sc-if value="{{ logged }}" hint-placeholder-val="{{ false }}">
+    <div style="margin-top:26px;border-top:1.5px solid #161513">
+      <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #161513;font-weight:700;font-size:13px;letter-spacing:.04em"><span>WE PREDICTED</span><span>{{ predicted }}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #161513;font-weight:700;font-size:13px;letter-spacing:.04em"><span>YOU SAID</span><span>{{ rate }}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #161513;font-weight:700;font-size:13px;letter-spacing:.04em"><span>GAP</span><span>{{ gap }}</span></div>
+    </div>
+    <div style="font-weight:800;font-size:12px;letter-spacing:.05em;margin-top:24px">PREDICTION ACCURACY</div>
+    <div style="display:flex;align-items:flex-end;gap:10px"><span style="font-family:Anton,sans-serif;font-size:96px;line-height:1.05">{{ accNow }}</span><span style="font-weight:700;font-size:13px;padding-bottom:14px">% · LEARNING YOU</span></div>
+    <svg viewBox="0 0 350 110" style="width:100%;display:block;margin-top:14px;overflow:visible">
+      <path d="{{ accPath }}" fill="none" stroke="#161513" stroke-width="3" stroke-linecap="round"></path>
+      <path d="{{ accDots }}" fill="#161513"></path>
+      <circle cx="{{ accLast.x }}" cy="{{ accLast.y }}" r="8" fill="#FF5F0F" stroke="#161513" stroke-width="2.5"></circle>
+      <line x1="0" y1="104" x2="350" y2="104" stroke="#161513" stroke-width="1.5"></line>
+    </svg>
+    <div style="display:flex;justify-content:space-between;font-weight:700;font-size:11px;margin-top:8px"><span>#1</span><span>#2</span><span>#3</span><span>#4</span><span>#5</span><span>#6</span><span>NOW</span></div>
+  </sc-if>
+</div>
+<div onClick="{{ submit }}" style="margin-top:28px;background:{{ logBg }};cursor:pointer;padding:0 0 18px">
+  <div style="font-family:Anton,sans-serif;font-size:132px;line-height:.86;margin-left:-6px;white-space:nowrap;padding-top:6px">{{ logWord }}</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 20px 0;font-weight:800;font-size:13px;letter-spacing:.05em"><span>{{ logCta }}</span><span style="font-size:22px">→</span></div>
+</div>
+</sc-if>
+
+<div style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:440px;background:#161513;display:grid;grid-template-columns:repeat(5,1fr);z-index:10">
+  <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+    <button onClick="{{ t.go }}" style="height:64px;background:transparent;border:none;color:{{ t.color }};font-weight:800;font-size:11px;letter-spacing:.06em;white-space:nowrap;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px">
+      <span style="width:6px;height:6px;border-radius:50%;background:{{ t.dot }}"></span>{{ t.label }}
+    </button>
+  </sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const SIZES = ['XS','S','M','L','XL'];
+const SCORE = [38, 71, 91, 79, 54];
+const LOOSE = [1.8, 3.4, 5.1, 6.6, 8.0];
+const FEEL = ['Tight all over — restricts movement','Snug, slim through chest','Relaxed as designed','Roomy, slightly boxy','Oversized, drops past shoulders'];
+const NOTE = [
+  'Too small: chest and shoulders sit below your body measurements.',
+  'Works if you like it close. Shoulders pull when you reach forward.',
+  'Matches the relaxed cut the designer intended. Sleeves land at the wrist.',
+  'Good for layering. Length runs 4 cm longer and sleeves bunch at the cuff.',
+  'Shoulder seams drop 6 cm. Only for a deliberately oversized look.'
+];
+const ZONES = ['CHEST','WAIST','SHOULDER','SLEEVE','LENGTH'];
+const EASE = [[-4,-3,-2.5,-3,-5],[2,3,-0.5,-1.5,-2],[8,9,1,0.5,1],[13,14,2.5,3.5,5],[18,19,5,6,8]];
+const BODY = [['CHEST','92 CM'],['WAIST','76 CM'],['SHOULDER','44 CM'],['ARM LENGTH','60 CM'],['BUILD','ATHLETIC · STRAIGHT']];
+const KEPT = [2, 9, 54, 28, 7];
+const RATE = ['','Way too tight','Too tight','A bit snug','Slightly snug','Perfect','Slightly loose','A bit loose','Too loose','Way too loose'];
+const ACC = [68, 72, 76, 75, 81, 85];
+const EMPTY = { rate: null, spots: [], logged: false };
+const PUR = [
+  { id: 'linen', name: 'LINEN SHIRT', size: 'M', date: 'DELIVERED 3 DAYS AGO', pred: 5 },
+  { id: 'tank', name: 'RIBBED TANK', size: 'S', date: 'DELIVERED 5 DAYS AGO', pred: 4 },
+  { id: 'chinos', name: 'WIDE-LEG CHINOS', size: '30', date: 'DELIVERED 2 WEEKS AGO', pred: 5 },
+  { id: 'puffer', name: 'CROPPED PUFFER', size: 'L', date: 'DELIVERED 1 MONTH AGO', pred: 6 }
+];
+const W = 350, H = 160;
+const xOf = i => 20 + i * 77.5, yOf = v => 10 + (1 - v / 100) * (H - 20);
+function smooth(p) {
+  let d = `M${p[0][0].toFixed(1)},${p[0][1].toFixed(1)}`;
+  for (let i = 0; i < p.length - 1; i++) {
+    const p0 = p[i - 1] || p[i], p1 = p[i], p2 = p[i + 1], p3 = p[i + 2] || p2;
+    d += ` C${(p1[0] + (p2[0] - p0[0]) / 6).toFixed(1)},${(p1[1] + (p2[1] - p0[1]) / 6).toFixed(1)} ${(p2[0] - (p3[0] - p1[0]) / 6).toFixed(1)},${(p2[1] - (p3[1] - p1[1]) / 6).toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;
+  }
+  return d;
+}
+const dots = (arr, r) => arr.map(([x, y]) => `M${x - r},${y} a${r},${r} 0 1,0 ${2 * r},0 a${r},${r} 0 1,0 ${-2 * r},0`).join(' ');
+const gY = k => 140 - (k - 1) / 8 * 130;
+let ticks = '';
+for (let k = 1; k <= 9; k += 0.5) { const y = gY(k), w = k % 1 === 0 ? 14 : 8; ticks += `M${37 - w},${y} h${w} M53,${y} h${w} `; }
+const ideal = [[4, 12], [4, 14], [-1, 3], [-1, 3], [-2, 4]];
+
+class Component extends DCLogic {
+  state = { tab: 'fit', sel: 2, photo: null, item: 0, reviews: { chinos: { rate: 6, spots: ['LENGTH'], logged: true }, puffer: { rate: 4, spots: ['SLEEVES'], logged: true } } };
+  upd(p) { const id = PUR[this.state.item].id; this.setState(st => ({ reviews: { ...st.reviews, [id]: { ...(st.reviews[id] || EMPTY), ...p } } })); }
+  go(tab) { this.setState({ tab }); window.scrollTo(0, 0); }
+  renderVals() {
+    const s = this.state, i = s.sel;
+    const fp = SCORE.map((v, k) => [xOf(k), yOf(v)]);
+    const zones = ZONES.map((n, z) => {
+      const e = EASE[i][z], [lo, hi] = ideal[z], mid = (lo + hi) / 2, span = (hi - lo);
+      const t = Math.max(0.04, Math.min(0.96, 0.5 + (e - mid) / span * 0.2));
+      const off = t < 0.4 || t > 0.6;
+      return { n, ease: (e > 0 ? '+' : '') + e + ' CM', pos: (t * 100).toFixed(1) + '%',
+        dot: off ? '#FF5F0F' : '#161513', c: off ? '#C2410C' : '#6E6A62',
+        word: t < 0.4 ? 'TIGHT' : t > 0.6 ? 'LOOSE' : 'IDEAL' };
+    });
+    const P = PUR[s.item], r = s.reviews[P.id] || EMPTY; const youN = r.rate || 0, gapN = Math.abs(youN - P.pred);
+    const acc = r.logged ? [...ACC, Math.min(96, 85 + Math.max(1, 5 - gapN * 2))] : ACC;
+    const ap = acc.map((a, k) => [k / 6 * W, 100 - (a - 60) / 40 * 96]);
+    const sizePick = k => () => this.setState({ sel: k });
+    return {
+      isFit: s.tab === 'fit', isCompare: s.tab === 'compare', isTry: s.tab === 'try', isBody: s.tab === 'body', isReview: s.tab === 'review',
+      tabs: [['fit','FIT'],['compare','COMPARE'],['try','TRY ON'],['body','BODY'],['review','REVIEW']].map(([k, l]) => ({ label: l, color: s.tab === k ? '#FF5F0F' : '#E9E3D8', dot: s.tab === k ? '#FF5F0F' : 'transparent', go: () => this.go(k) })),
+      recSize: 'M', recScore: SCORE[2],
+      fitPath: smooth(fp), fitDots: dots(fp, 4.5), selPt: { x: fp[i][0], y: fp[i][1], ly: fp[i][1] - 18 }, selScore: SCORE[i], selSize: SIZES[i],
+      sizeBtns: SIZES.map((sz, k) => ({ s: sz, fg: k === i ? '#FF5F0F' : '#161513', pick: sizePick(k) })),
+      sizeChips: SIZES.map((sz, k) => ({ s: sz, bg: k === i ? '#161513' : 'transparent', fg: k === i ? '#E9E3D8' : '#161513', pick: sizePick(k) })),
+      toReviewCount: PUR.filter(q => !(s.reviews[q.id] || EMPTY).logged).length,
+      purchases: PUR.map((q, k) => { const rv = s.reviews[q.id] || EMPTY, on = k === s.item;
+        return { ...q, bg: on ? '#161513' : 'transparent', fg: on ? '#E9E3D8' : '#161513',
+          status: rv.logged ? 'REVIEWED · ' + rv.rate : 'TO REVIEW', chipBg: rv.logged ? 'transparent' : '#FF5F0F', chipFg: rv.logged ? (on ? '#E9E3D8' : '#161513') : '#161513', chipBd: rv.logged ? (on ? '#E9E3D8' : '#161513') : '#FF5F0F',
+          pick: () => this.setState({ item: k }) }; }),
+      curHeader: P.name + ' · SIZE ' + P.size + ' · ' + P.date, predicted: P.pred + ' · ' + RATE[P.pred].toUpperCase(),
+      hasPhoto: !!s.photo, noPhoto: !s.photo, photoBg: s.photo ? `url("${s.photo}")` : 'none',
+      camLabel: s.photo ? 'RETAKE' : 'TAKE PHOTO',
+      camRef: this.camRef || (this.camRef = React.createRef()), albumRef: this.albumRef || (this.albumRef = React.createRef()),
+      openCam: () => this.camRef.current && this.camRef.current.click(),
+      openAlbum: () => this.albumRef.current && this.albumRef.current.click(),
+      onFile: e => { const f = e.target.files && e.target.files[0]; if (!f) return; if (s.photo) URL.revokeObjectURL(s.photo); this.setState({ photo: URL.createObjectURL(f) }); e.target.value = ''; },
+      goCompare: () => this.go('compare'), goTry: () => this.go('try'),
+      ticks, feelPos: (4 + (LOOSE[i] - 1) / 8 * 92).toFixed(1) + '%', selFeel: FEEL[i], selNote: NOTE[i], zones,
+      measures: BODY.map(([n, v]) => ({ n, v })),
+      kept: KEPT.map((p, k) => ({ s: SIZES[k], p: p + '%', h: Math.max(10, p * 2.4) + 'px', c: k === 2 ? '#FF5F0F' : '#161513' })),
+      rateBtns: [1,2,3,4,5,6,7,8,9].map(n => ({ n, bg: r.rate === n ? (n === 5 ? '#161513' : '#FF5F0F') : 'transparent', fg: r.rate === n && n === 5 ? '#E9E3D8' : '#161513', pick: () => this.upd({ rate: n, logged: false }) })),
+      rateText: r.rate ? RATE[r.rate] : 'Tap a number. 5 = perfect fit.',
+      spotBtns: ['SHOULDERS','CHEST','WAIST','SLEEVES','LENGTH'].map(l => { const on = r.spots.includes(l); return { label: l, bg: on ? '#161513' : 'transparent', fg: on ? '#E9E3D8' : '#161513', pick: () => this.upd({ spots: on ? r.spots.filter(x => x !== l) : [...r.spots, l] }) }; }),
+      logged: r.logged, rate: r.rate ? `${r.rate} · ${RATE[r.rate].toUpperCase()}` : '', gap: gapN === 0 ? 'SPOT ON' : (youN > P.pred ? '+' : '−') + gapN,
+      accNow: acc[acc.length - 1], accPath: smooth(ap), accDots: dots(ap.slice(0, -1), 4), accLast: { x: ap[ap.length - 1][0], y: ap[ap.length - 1][1] },
+      logWord: r.logged ? 'THANKS' : 'SEND IT', logBg: r.rate ? '#FF5F0F' : '#CFC8BB',
+      logCta: r.logged ? 'NEXT SIZE PICK GETS SHARPER · NEXT ITEM' : (r.rate ? 'UPDATE MY FIT MODEL' : 'RATE THE FIT FIRST'),
+      submit: () => { if (r.logged) { const nx = PUR.findIndex(q => !(s.reviews[q.id] || EMPTY).logged && q.id !== P.id); if (nx >= 0) { this.setState({ item: nx }); window.scrollTo(0, 0); } else this.go('fit'); } else if (r.rate) this.upd({ logged: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>
