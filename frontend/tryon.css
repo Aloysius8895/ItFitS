@@ -1,0 +1,50 @@
+/* Virtual try-on page — reuses the tokens from styles.css */
+.tryon-head{padding:30px 0 34px}
+.tryon-head h1{font-size:54px;margin:14px 0}
+.tryon-head p{color:var(--muted-foreground);font-size:13px;line-height:1.9;max-width:520px}
+.tryon-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:28px;align-items:start;padding-bottom:70px}
+.results{display:grid;gap:24px;position:sticky;top:20px}
+.panel{border:1px solid var(--border);border-radius:8px;background:var(--secondary);padding:26px}
+.panel h2{font-size:26px;margin:0 0 16px}
+.panel h2:not(:first-child){margin-top:30px}
+.field-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+.flow-field{display:grid;gap:7px;font-size:11px;color:var(--muted-foreground)}
+.flow-field input,.flow-field select,.chart input{width:100%;height:40px;background:var(--background);border:1px solid var(--border);border-radius:5px;padding:0 10px;color:var(--foreground);font:inherit;outline:none}
+.flow-field input:focus,.flow-field select:focus,.chart input:focus{border-color:var(--primary)}
+.flow-field input[type=file]{padding:8px 10px;height:auto}
+.flow-field.invalid input,.flow-field.invalid select,.chart input.invalid{border-color:var(--rose)}
+.upload{margin-bottom:16px}
+.preview{max-height:220px;max-width:100%;object-fit:contain;border-radius:6px;border:1px solid var(--border);justify-self:start;margin-top:6px}
+.chart-head{display:flex;justify-content:space-between;align-items:center;margin:20px 0 8px}
+.chart,.sizes{width:100%;border-collapse:collapse}
+.chart th,.sizes th{font-size:8px;letter-spacing:1.4px;color:var(--muted-foreground);text-align:left;font-weight:400;padding:6px 6px 6px 0}
+.chart td{padding:3px 6px 3px 0}
+.chart input{height:34px;padding:0 8px}
+.chart .rm{width:28px;height:28px;font-size:18px;color:var(--muted-foreground)}
+.sizes td{padding:12px 6px 12px 0;border-top:1px solid var(--border);font-size:12px}
+.sizes tr.picked td{background:color-mix(in oklch,var(--primary) 8%,transparent)}
+.sizes .ease{color:var(--muted-foreground);font-size:10px;line-height:1.6}
+.badge{display:inline-block;padding:4px 10px;border-radius:99px;font-size:9px;letter-spacing:1.2px;border:1px solid currentColor;white-space:nowrap}
+.badge.too_tight{color:oklch(.72 .17 25)}
+.badge.fitted{color:oklch(.78 .15 150)}
+.badge.relaxed{color:oklch(.8 .12 95)}
+.badge.oversize{color:oklch(.75 .13 250)}
+.rec{font-size:8px;letter-spacing:1.4px;color:var(--primary);margin-left:8px}
+.sizes button{height:30px;padding:0 14px;border:1px solid var(--primary);border-radius:99px;font-size:9px;letter-spacing:1.2px;color:var(--foreground)}
+.tryon-view{display:grid;gap:14px}
+.tryon-img{width:100%;max-height:560px;object-fit:contain;border-radius:6px;border:1px solid var(--border);background:var(--background)}
+.loading{display:grid;place-items:center;min-height:240px;color:var(--muted-foreground);font-size:11px;letter-spacing:1.4px;border:1px dashed var(--border);border-radius:6px}
+.verdict{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.verdict strong{font-family:var(--font-display);font-size:30px;font-weight:400}
+.notice{border:1px solid var(--border);border-radius:6px;padding:12px 14px;font-size:11px;line-height:1.7;color:var(--muted-foreground);background:var(--background)}
+.error{margin-top:12px;font-size:11px;color:var(--rose);line-height:1.6}
+.review-choices{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.review-choices button{height:38px;padding:0 20px;border:1px solid var(--border);border-radius:99px;font-size:11px}
+.review-choices button.on{border-color:var(--primary);background:color-mix(in oklch,var(--primary) 18%,transparent)}
+.review-choices button:disabled{opacity:.45;cursor:not-allowed}
+.loop{margin-top:16px;display:grid;gap:8px;font-size:10px;color:var(--muted-foreground)}
+.bar{position:relative;height:6px;border-radius:99px;background:var(--background);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--primary)}
+.bar b{position:absolute;top:0;bottom:0;width:2px;background:var(--foreground)}
+@media(max-width:1000px){.tryon-grid{grid-template-columns:1fr}.results{position:static}.tryon-head h1{font-size:42px}}
+@media(max-width:600px){.field-grid{grid-template-columns:1fr 1fr}.nav-links{display:none}}

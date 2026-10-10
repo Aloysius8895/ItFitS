@@ -8,6 +8,7 @@ from pydantic import BaseModel, Field
 
 from backend.preprocessing import normalize_input
 from backend.predictor import predictor
+from backend.tryon_routes import router as tryon_router
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,6 +29,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(tryon_router)
 
 
 class FitRequest(BaseModel):

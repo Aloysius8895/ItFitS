@@ -55,3 +55,7 @@ models/*.pkl
 # Uncomment these if the dataset is too large for GitHub:
 # data/raw/*.json
 # data/clean/*.csv
+# Secrets and local review data
+.env
+data/feedback/
+models/versions/

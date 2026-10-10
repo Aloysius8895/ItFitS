@@ -246,6 +246,25 @@ http://127.0.0.1:5500
 
 ---
 
+## 👗 Virtual Try-On & Review Loop
+
+Open `frontend/tryon.html` (link in the nav). Enter your measurements, upload a photo of yourself and of the garment, and fill in the garment's size chart. FLOWFIT labels each size **Too tight / Fitted / Relaxed / Oversize** and renders the chosen size on you with Gemini.
+
+- **Verdict:** garment-vs-body "ease" per measurement (fabric stretch lowers the tight threshold), nudged by the trained fit model.
+- **Try-on image:** set `GEMINI_API_KEY` in `.env` (see `.env.example`). Without it the verdicts still work, only the image is skipped.
+- **Reviews:** after wearing, users report *too small / fit well / too big*. When at least `FLOWFIT_MIN_REVIEWS` (20) pending reviews exist and **20%** of them disagree with FLOWFIT's verdict, the model retrains itself on the base dataset plus all reviews. The new model is kept only if hold-out accuracy does not drop by more than 3 points; the previous model is saved in `models/versions/`.
+
+| Endpoint | Method | Purpose |
+|---|---|---|
+| `/api/tryon/analyze` | POST | Verdict for every size in the chart |
+| `/api/tryon/generate` | POST | Verdict + Gemini try-on image for one size |
+| `/api/reviews` | POST | Submit a post-purchase review |
+| `/api/reviews/status` | GET | Disagreement rate, model version, retrain history |
+
+> Retraining writes to `models/` and `data/feedback/`, so it works locally but not on Vercel's read-only filesystem.
+
+---
+
 ## 🔌 API Endpoints
 
 | Endpoint | Method | Purpose |
