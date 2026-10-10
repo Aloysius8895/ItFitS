@@ -26,6 +26,7 @@
     },
     "plugins": [
       "expo-router",
+      ["expo-camera", { "cameraPermission": "Allow Fitted to take a full-body photo for an on-device try-on reference.", "microphonePermission": false, "recordAudioAndroid": false }],
       ["expo-image-picker", { "photosPermission": "Allow Fitted to choose a photo for an on-device try-on reference.", "cameraPermission": "Allow Fitted to take a full-body photo for an on-device try-on reference.", "microphonePermission": false }],
       [
         "expo-splash-screen",
