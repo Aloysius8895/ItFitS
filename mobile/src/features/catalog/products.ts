@@ -14,7 +14,7 @@ export type Product = {
 };
 
 export const products: Product[] = [
-  { id: 'merino', name: '美丽诺羊毛圆领衫', category: '针织衫', price: 229, material: '美丽诺羊毛 80% · 尼龙 20%', cut: '宽松剪裁', color: '#C6B39A', chest: { XS: 92, S: 98, M: 104, L: 110, XL: 118 }, similarFeedback: '相近体型用户多选 M；想要明显宽松感的用户会选 XL。' },
-  { id: 'linen', name: '轻盈亚麻衬衫', category: '衬衫', price: 179, material: '亚麻 100%', cut: '标准剪裁', color: '#B6C2A8', chest: { XS: 90, S: 96, M: 102, L: 108, XL: 116 }, similarFeedback: '相近体型用户反馈 M 的肩部和胸部较舒适。' },
-  { id: 'denim', name: '经典牛仔外套', category: '外套', price: 299, material: '棉 98% · 弹性纤维 2%', cut: '直筒剪裁', color: '#8197A4', chest: { XS: 94, S: 100, M: 106, L: 112, XL: 120 }, similarFeedback: '相近体型用户常在 M 与 L 之间选择，取决于是否内搭厚衣。' },
+  { id: 'merino', name: 'MERINO CREW SWEATER', category: 'KNITWEAR', price: 229, material: '80% MERINO · 20% NYLON', cut: 'RELAXED', color: '#C6B39A', chest: { XS: 92, S: 98, M: 104, L: 110, XL: 118 }, similarFeedback: 'Similar bodies kept M most often; XL gives a deliberately oversized look.' },
+  { id: 'linen', name: 'LIGHT LINEN SHIRT', category: 'SHIRT', price: 179, material: '100% LINEN', cut: 'REGULAR', color: '#B6C2A8', chest: { XS: 90, S: 96, M: 102, L: 108, XL: 116 }, similarFeedback: 'Similar bodies found M comfortable through the shoulders and chest.' },
+  { id: 'denim', name: 'CLASSIC DENIM JACKET', category: 'JACKET', price: 299, material: '98% COTTON · 2% ELASTANE', cut: 'STRAIGHT', color: '#8197A4', chest: { XS: 94, S: 100, M: 106, L: 112, XL: 120 }, similarFeedback: 'Similar bodies chose M or L depending on how much they layered.' },
 ];

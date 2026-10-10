@@ -1,10 +1,10 @@
 # Fitted Mobile
 
-这是 React Native + Expo + TypeScript 的可运行原型。流程包括身材资料、商品浏览、尺码比较、试穿示意和购买后评价。
+A React Native + Expo + TypeScript prototype based on the original **Fitted App** design in `references/html/`. The app keeps the original FIT, COMPARE, TRY ON, BODY, and REVIEW flow, typography, colors, charts, and English copy.
 
-## 运行
+## Run
 
-需要 Node.js 和 npm。在项目根目录打开 PowerShell：
+Install Node.js and npm, then run from the repository root:
 
 ```powershell
 cd mobile
@@ -12,29 +12,29 @@ npm install
 npx expo start
 ```
 
-手机安装 Expo Go，扫描终端二维码。电脑与手机需连接同一网络。浏览器预览可运行 `npm run web`。
+Scan the QR code with Expo Go on your phone. Your phone and computer should be on the same network. For a browser preview, run `npm run web` from `mobile/`.
 
-如果浏览器出现 `localhost:8000` 的 **Directory listing**，那是旧 HTML 文件服务器，不是这个 App。请从 `mobile/` 运行 `npx expo start --web`，打开终端显示的 Expo 地址（通常为 `http://localhost:8081`）。
+If `localhost:8000` shows **Directory listing**, that is the old HTML file server. Start Expo from `mobile/` and open the URL shown in its terminal, usually `http://localhost:8081`.
 
-在 Windows 的 Chrome 中预览 iPhone 17 Pro Max 尺寸：打开 Expo 网页，按 `F12`、再按 `Ctrl+Shift+M`，将设备栏设为自定义 `440 × 956`、DPR `3`。这只模拟网页视口；真正的 iOS Simulator 需要 macOS。Windows 上可用真实 iPhone 的 Expo Go 测试 iOS 体验。
+On Windows, Chrome Device Mode can preview an iPhone 17 Pro Max sized viewport: open the Expo web app, press `F12`, then `Ctrl+Shift+M`, and add a custom `440 × 956` device with DPR `3`. This previews screen size only. A native iOS Simulator requires macOS; an iPhone with Expo Go can test the iOS app on Windows.
 
-## 文件夹
+## Project structure
 
-| 路径 | 内容 |
+| Path | Purpose |
 | --- | --- |
-| `mobile/src/app/` | 五个页面和导航 |
-| `mobile/src/features/catalog/` | 商品和尺码表演示数据 |
-| `mobile/src/features/fit/` | 身材资料类型、尺码评分和推荐规则 |
-| `mobile/src/features/state/` | 应用状态和本机保存 |
-| `mobile/src/features/reviews/` | 穿着评价类型 |
-| `mobile/src/features/ui/` | 共用界面组件 |
-| `mobile/assets/` | Expo 图标和字体资源 |
-| `references/html/` | 原始 HTML 原型与依赖脚本 |
-| `references/screenshots/`、`references/uploads/` | 原始截图与上传素材 |
-| `docs/` | 设计、实施计划与后续接入说明 |
+| `mobile/src/app/` | Five screens and navigation |
+| `mobile/src/features/catalog/` | Demo products and size charts |
+| `mobile/src/features/fit/` | Fit scoring, chart, and original demo data |
+| `mobile/src/features/state/` | Local app state |
+| `mobile/src/features/reviews/` | Review types |
+| `mobile/src/features/ui/` | Shared design components |
+| `mobile/assets/` | Fonts and Expo assets |
+| `references/html/` | Unmodified original HTML prototypes |
+| `references/screenshots/` and `references/uploads/` | Original visual references |
+| `docs/` | Design and future integration notes |
 
-## 核心演示
+## Demo behavior
 
-默认身材胸围 92 cm，羊毛衫推荐 M。切换到 XL 后，当前尺码显示 26 cm 胸围余量、明显宽大的文字说明，试穿页的衣服轮廓也会变宽。推荐 M 和选择 XL 同时存在，系统不会替用户改回推荐尺码。
+For the default 92 cm chest profile, the merino sweater recommends **M** with a fit score of **91**. Choosing **XL** keeps M as the recommendation while the compare and try-on screens show the selected XL fit as oversized. The selected size never silently changes back to the recommendation.
 
-试穿页只是轮廓叠加示意，不是 AI 生成的真人试穿图。尺码分数基于本地演示规则；评价保存在本机，还没有后端或模型训练。系统照片选择器返回缓存路径，若重启后照片不显示，请重新选择照片。
+Fit predictions are local demo calculations. The try-on photo uses a size-dependent silhouette overlay, not an AI-generated garment image. Reviews are stored on the device and do not train a model yet. Photos returned by the system picker may use a temporary cache path; select the photo again if it disappears after restarting the app.

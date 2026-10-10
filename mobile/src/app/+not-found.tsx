@@ -1,4 +1,4 @@
 import { Link } from 'expo-router';
 import { Text } from 'react-native';
-import { C, Page, s } from '../features/ui/Kit';
-export default function NotFound() { return <Page title="页面不存在"><Text style={s.body}>这个页面无法打开。</Text><Link href="/" style={{ color: C.orange, fontWeight: '900' }}>返回商品页</Link></Page>; }
+import { C, Content, F, Hero, Screen } from '../features/ui/Kit';
+export default function NotFound() { return <Screen><Content><Hero>NOT FOUND</Hero><Text style={{ fontFamily: F.body, color: C.ink, marginTop: 20 }}>This page does not exist.</Text><Link href="/" style={{ color: C.orange, fontFamily: F.body, fontWeight: '800', marginTop: 20 }}>BACK TO FIT</Link></Content></Screen>; }

@@ -1,9 +1,30 @@
 import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-export const C = { bg: '#E9E3D8', ink: '#161513', orange: '#FF5F0F', muted: '#6E6A62', card: '#F5F0E7' };
-export function Page({ title, eyebrow, children }: { title: string; eyebrow?: string; children: React.ReactNode }) { return <ScrollView style={{ backgroundColor: C.bg }} contentContainerStyle={s.page} keyboardShouldPersistTaps="handled"><Text style={s.brand}>FITTED <Text style={{ color: C.orange }}>●</Text></Text>{eyebrow ? <Text style={s.eyebrow}>{eyebrow}</Text> : null}<Text style={s.title}>{title}</Text>{children}<Text style={s.footer}>原型演示 · 尺码预测与试穿效果仅供参考</Text></ScrollView>; }
-export function Card({ children }: { children: React.ReactNode }) { return <View style={s.card}>{children}</View>; }
-export function Label({ children }: { children: React.ReactNode }) { return <Text style={s.label}>{children}</Text>; }
-export function Pill({ title, selected, onPress }: { title: string; selected?: boolean; onPress: () => void }) { return <Pressable onPress={onPress} style={[s.pill, selected && s.pillOn]}><Text style={[s.pillText, selected && { color: C.bg }]}>{title}</Text></Pressable>; }
-export function Button({ title, onPress, disabled }: { title: string; onPress: () => void; disabled?: boolean }) { return <Pressable onPress={onPress} disabled={disabled} style={[s.button, disabled && { opacity: .4 }]}><Text style={s.buttonText}>{title}  →</Text></Pressable>; }
-export const s = StyleSheet.create({ page: { padding: 20, paddingTop: 28, paddingBottom: 100, gap: 14 }, brand: { color: C.ink, fontSize: 20, fontWeight: '900', letterSpacing: 1 }, eyebrow: { color: C.muted, fontSize: 11, fontWeight: '800', letterSpacing: 1, marginTop: 12 }, title: { color: C.ink, fontSize: 43, fontWeight: '900', lineHeight: 46, letterSpacing: -2 }, card: { backgroundColor: C.card, borderWidth: 1, borderColor: C.ink, borderRadius: 8, padding: 18, gap: 12 }, label: { color: C.muted, fontSize: 11, fontWeight: '800', letterSpacing: 1 }, body: { color: C.ink, fontSize: 15, lineHeight: 23 }, big: { color: C.ink, fontSize: 70, fontWeight: '900', lineHeight: 75 }, row: { flexDirection: 'row', gap: 8, flexWrap: 'wrap' }, pill: { borderColor: C.ink, borderWidth: 1.5, borderRadius: 30, paddingVertical: 10, paddingHorizontal: 17 }, pillOn: { backgroundColor: C.ink }, pillText: { color: C.ink, fontWeight: '800', fontSize: 14 }, button: { backgroundColor: C.orange, borderWidth: 1.5, borderColor: C.ink, borderRadius: 30, padding: 16, alignItems: 'center' }, buttonText: { color: C.ink, fontWeight: '900', fontSize: 15 }, footer: { color: C.muted, fontSize: 11, textAlign: 'center', marginTop: 20 } });
+import { Pressable, ScrollView, StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+export const C = { outer: '#D9D2C5', paper: '#E9E3D8', ink: '#161513', orange: '#FF5F0F', muted: '#6E6A62', track: '#D3CCBF' };
+export const F = { display: 'Anton', body: 'Archivo' };
+
+export function Screen({ children }: { children: React.ReactNode }) {
+  return <ScrollView style={{ backgroundColor: C.outer }} contentContainerStyle={{ alignItems: 'center', flexGrow: 1 }} keyboardShouldPersistTaps="handled"><View style={{ width: '100%', maxWidth: 440, minHeight: '100%', backgroundColor: C.paper, paddingBottom: 100 }}><BrandHeader />{children}</View></ScrollView>;
+}
+
+export function BrandHeader() {
+  const insets = useSafeAreaInsets();
+  return <View style={[styles.header, { paddingTop: 18 + insets.top }]}><Text style={{ fontFamily: F.display, fontSize: 22, color: C.ink }}>FITTED</Text><View style={styles.headerStatus}><View style={{ width: 7, height: 7, borderRadius: 4, backgroundColor: C.orange }} /><Text style={styles.headerStatusText}>PROFILE 96% COMPLETE</Text></View></View>;
+}
+
+export function Content({ children, style }: { children: React.ReactNode; style?: ViewStyle }) { return <View style={[styles.content, style]}>{children}</View>; }
+export function Eyebrow({ children, style }: { children: React.ReactNode; style?: TextStyle }) { return <Text style={[styles.eyebrow, style]}>{children}</Text>; }
+export function Hero({ children, style }: { children: React.ReactNode; style?: TextStyle }) { return <Text style={[styles.hero, style]}>{children}</Text>; }
+export function BodyText({ children, style }: { children: React.ReactNode; style?: TextStyle }) { return <Text style={[styles.body, style]}>{children}</Text>; }
+
+export function SizeSelector({ sizes, selected, onSelect, plain = false }: { sizes: readonly string[]; selected: string; onSelect: (size: string) => void; plain?: boolean }) {
+  return <View style={{ flexDirection: 'row', gap: plain ? 0 : 6, marginTop: plain ? 6 : 20 }}>{sizes.map(size => <Pressable accessibilityRole="button" accessibilityLabel={`Select size ${size}`} onPress={() => onSelect(size)} key={size} style={{ flex: 1, height: plain ? 44 : 48, borderRadius: plain ? 0 : 24, borderWidth: plain ? 0 : 1.5, borderColor: C.ink, backgroundColor: !plain && size === selected ? C.ink : 'transparent', alignItems: 'center', justifyContent: 'center' }}><Text style={{ fontFamily: F.display, fontSize: 20, color: size === selected ? (plain ? C.orange : C.paper) : C.ink }}>{size}</Text></Pressable>)}</View>;
+}
+
+export function DataRow({ label, value, valueColor = C.ink }: { label: string; value: string; valueColor?: string }) { return <View style={styles.dataRow}><Text style={styles.dataText}>{label}</Text><Text style={[styles.dataText, { color: valueColor, textAlign: 'right', flexShrink: 1 }]}>{value}</Text></View>; }
+
+export function OrangeCta({ word, subtitle, detail, onPress, disabled }: { word: string; subtitle: string; detail?: string; onPress: () => void; disabled?: boolean }) { return <Pressable accessibilityRole="button" onPress={onPress} disabled={disabled} style={{ backgroundColor: disabled ? '#CFC8BB' : C.orange, marginTop: 28, overflow: 'hidden', paddingBottom: 18 }}><Text numberOfLines={1} style={{ fontFamily: F.display, fontSize: 132, lineHeight: 116, marginLeft: -6, color: C.ink }}>{word}</Text>{detail ? <BodyText style={{ marginHorizontal: 20, marginTop: 2 }}>{detail}</BodyText> : null}<View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, paddingTop: 10 }}><Text style={[styles.dataText, { flex: 1 }]}>{subtitle}</Text><Text style={{ fontFamily: F.body, fontSize: 24, fontWeight: '800', color: C.ink }}>→</Text></View></Pressable>; }
+
+export const styles = StyleSheet.create({ header: { paddingTop: 18, paddingHorizontal: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 10 }, headerStatus: { flexDirection: 'row', alignItems: 'center', gap: 8 }, headerStatusText: { color: C.ink, fontFamily: F.body, fontSize: 11, fontWeight: '700', letterSpacing: .6 }, content: { paddingHorizontal: 20, paddingTop: 22 }, eyebrow: { fontFamily: F.body, fontSize: 12, fontWeight: '700', color: C.muted, letterSpacing: .6 }, hero: { fontFamily: F.display, fontSize: 58, lineHeight: 54, color: C.ink, marginTop: 8 }, body: { color: C.ink, fontFamily: F.body, fontSize: 15, lineHeight: 22, fontWeight: '500' }, dataRow: { paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: C.ink, flexDirection: 'row', justifyContent: 'space-between', gap: 10 }, dataText: { color: C.ink, fontFamily: F.body, fontSize: 13, fontWeight: '800', letterSpacing: .4 } });

@@ -2,15 +2,20 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { products } from '../src/features/catalog/products';
 import { defaultProfile, fitFor, recommend } from '../src/features/fit/fit';
+import { fitZones, originalFeel } from '../src/features/fit/original';
 
 test('recommended size remains M when a user chooses oversized XL', () => {
   const product = products[0];
   const recommendation = recommend(product, defaultProfile);
   const chosen = fitFor(product, defaultProfile, 'XL');
   assert.equal(recommendation.size, 'M');
+  assert.equal(recommendation.score, 91);
   assert.equal(chosen.size, 'XL');
   assert.equal(chosen.ease, 26);
-  assert.equal(chosen.label, '明显宽大');
+  assert.equal(chosen.score, 54);
+  assert.equal(chosen.label, 'OVERSIZED');
+  assert.equal(originalFeel('XL'), 'Oversized, drops past shoulders');
+  assert.equal(fitZones('XL', defaultProfile)[0].word, 'LOOSE');
   assert.ok(chosen.score < recommendation.score);
 });
 

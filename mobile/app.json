@@ -26,7 +26,7 @@
     },
     "plugins": [
       "expo-router",
-      ["expo-image-picker", { "photosPermission": "允许 Fitted 选择照片用于本机试穿示意。", "cameraPermission": false, "microphonePermission": false }],
+      ["expo-image-picker", { "photosPermission": "Allow Fitted to choose a photo for an on-device try-on reference.", "cameraPermission": "Allow Fitted to take a full-body photo for an on-device try-on reference.", "microphonePermission": false }],
       [
         "expo-splash-screen",
         {

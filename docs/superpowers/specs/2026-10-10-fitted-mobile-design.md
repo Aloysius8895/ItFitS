@@ -1,27 +1,27 @@
-# Fitted Mobile 原型设计
+# Fitted Mobile Prototype Design
 
-## 目标
+## Goal
 
-用 React Native、Expo、TypeScript 制作可运行的手机原型，覆盖身材资料、商品、尺码比较、试穿示意、购买后评价的完整流程。
+Build a runnable React Native + Expo + TypeScript prototype based on the original `references/html/Fitted App.dc.html` design. Keep its FIT, COMPARE, TRY ON, BODY, and REVIEW screens, English copy, typography, palette, large orange calls to action, charts, and bottom navigation.
 
-## 核心规则
+## Core behavior
 
-- 推荐尺码与用户当前选择尺码是两个独立值。切换到 XL 时，即使推荐 M，也显示 XL 的宽松程度。
-- 原型使用本地演示商品、尺寸、预测和评价；所有预测与试穿视觉均标为演示，不冒充真实 AI 输出。
-- 用户可以偏好合身或宽松版型；推荐说明呈现商品尺寸、面料及相似体型评价的示例依据。
+- The recommended size and selected size are separate. If the app recommends M and the user selects XL, comparison and try-on show XL as oversized.
+- Local sample products, garment measurements, fit scores, and reviews are demo data. The image overlay is a visual guide, not an AI-generated try-on result.
+- Body measurements can be edited and stored locally. Reviews are stored locally and do not train a model yet.
 
-## 页面与数据流
+## Screens and data flow
 
-1. 身材页：输入身高、胸围、腰围、肩宽，并选择照片；保存在设备本地。
-2. 商品页：浏览演示商品并进入详情。
-3. 尺码页：计算推荐尺码、列出各尺码评分及胸围余量；选择尺码后展示对应感受。
-4. 试穿页：展示照片或人体示意图，随着选择尺码改变衣服轮廓和宽松提示。视觉是示意图。
-5. 评价页：模拟购买记录，提交实际合身评分和部位反馈，更新本地评价记录。
+1. **FIT:** Show the recommended size, score curve by size, evidence rows, and the large COMPARE call to action.
+2. **COMPARE:** Select XS–XL; show the original overall-feel gauge, body-zone ease rows, and size-specific note.
+3. **TRY ON:** Choose or take a photo; show the selected size, a size-dependent silhouette overlay, fit zones, and a clear demo label.
+4. **BODY:** Show height, weight, similar-body size distribution, and measurements. Tapping values opens an editor.
+5. **REVIEW:** Select a demo purchase, rate fit from 1 to 9, mark trouble spots, and view feedback history.
 
-## 架构
+## Structure
 
-`mobile/src/app/` 放页面与导航；`mobile/src/features/` 按业务功能放类型、演示数据、计算和组件；`mobile/assets/` 放图片；`docs/` 放说明；`references/` 保存原始 HTML 原型。
+`mobile/src/app/` contains screens and routing. `mobile/src/features/` contains product data, fit calculations, state, reviews, and shared design components. `mobile/assets/` contains fonts and Expo assets. `references/` keeps the unmodified original HTML and screenshots.
 
-## 错误与测试
+## Verification
 
-身材输入必须是合理的正数；未提供照片时使用人体示意图；缺失商品数据时给出友好提示。用 TypeScript 检查工程，并用关键计算测试验证推荐尺码与所选尺码分离。
+Validate measurements, show a useful empty photo state, and keep recommendation separate from selection. Run tests for the M recommendation and XL oversized case, TypeScript, lint, Expo Doctor, and a web export.
