@@ -30,7 +30,7 @@ export function CameraCapture({ onPhotoConfirmed, onCancel }: Props) {
     return (
       <View style={[s.screen, s.center, pad]}>
         <Text style={s.title}>CAMERA ACCESS</Text>
-        <Text style={s.note}>{blocked ? 'Camera access is turned off for this app. Turn it on in Settings to take your photo.' : 'Fitted needs your camera to take a full-body photo.'}</Text>
+        <Text style={s.note}>{blocked ? 'Camera access is turned off for this app. Turn it on in Settings to take your photo.' : 'ItFitS needs your camera to take a full-body photo.'}</Text>
         <Btn label={blocked ? 'OPEN SETTINGS' : 'START CAMERA'} primary onPress={askPermission} />
         {error ? <Text style={s.error}>{error}</Text> : null}
         {onCancel ? <Btn label="CANCEL" onPress={onCancel} /> : null}
@@ -74,7 +74,7 @@ export function CameraCapture({ onPhotoConfirmed, onCancel }: Props) {
 
 function Btn({ label, onPress, primary, small, grow, disabled }: { label: string; onPress: () => void; primary?: boolean; small?: boolean; grow?: boolean; disabled?: boolean }) {
   return (
-    <Pressable accessibilityRole="button" disabled={disabled} onPress={onPress} style={[s.btn, disabled && { opacity: 0.4 }, primary && { backgroundColor: C.orange, borderColor: C.ink }, small && s.btnSmall, grow ? { flex: 1 } : !small && { alignSelf: 'stretch' }]}>
+    <Pressable accessibilityRole="button" disabled={disabled} onPress={onPress} style={[s.btn, disabled && { opacity: 0.4 }, primary && { backgroundColor: C.accent, borderColor: C.ink }, small && s.btnSmall, grow ? { flex: 1 } : !small && { alignSelf: 'stretch' }]}>
       <Text style={[s.btnText, primary && { color: C.ink }]}>{label}</Text>
     </Pressable>
   );
@@ -93,5 +93,5 @@ const s = StyleSheet.create({
   btnSmall: { height: 44, borderRadius: 22 },
   btnText: { fontFamily: F.body, fontSize: 13, fontWeight: '800', color: C.paper },
   shutter: { width: 76, height: 76, borderRadius: 38, borderWidth: 4, borderColor: C.paper, alignItems: 'center', justifyContent: 'center', marginTop: 12 },
-  shutterInner: { width: 58, height: 58, borderRadius: 29, backgroundColor: C.orange },
+  shutterInner: { width: 58, height: 58, borderRadius: 29, backgroundColor: C.accent },
 });

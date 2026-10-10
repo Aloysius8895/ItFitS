@@ -1,0 +1,28 @@
+# Not uploaded for the `itfits` Vercel project (repository root).
+# Secrets
+.env
+**/.env
+**/.env.*
+# Local environments, builds and caches
+**/node_modules
+model/.venv
+mobile/dist
+mobile/.expo
+**/__pycache__
+# Large training data and local review database
+data/training
+model/data/feedback
+model/models/versions
+# Deployed as its own Vercel project
+mock
+# Not needed at runtime
+.local-backups
+.thumbnail
+references
+screenshots
+uploads
+docs
+Icon
+model/frontend
+model/scripts
+model/api

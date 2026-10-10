@@ -13,3 +13,9 @@ mobile/expo-env.d.ts
 mobile/ios/
 mobile/android/
 mobile/*.tsbuildinfo
+
+# Training data package and downloaded image shards (~1 GB)
+/data/training/
+
+.vercel
+.env*

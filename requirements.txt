@@ -1,0 +1,9 @@
+# Backend dependencies for the Vercel Python function (api/index.py).
+# Local development uses model/requirements.txt.
+fastapi
+pandas
+numpy
+# fit_model.pkl was saved with 1.6.1; keep in sync until the model is retrained
+scikit-learn==1.6.1
+pydantic
+joblib

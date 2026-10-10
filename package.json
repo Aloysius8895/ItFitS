@@ -1,0 +1,9 @@
+{
+  "name": "itfits",
+  "private": true,
+  "description": "Run each part in its own terminal: npm run mock, npm run app (and the backend, see README)",
+  "scripts": {
+    "mock": "npm --prefix mock start",
+    "app": "npm --prefix mobile start"
+  }
+}

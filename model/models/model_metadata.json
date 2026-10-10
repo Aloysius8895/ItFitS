@@ -1,0 +1,108 @@
+{
+    "project": "FLOWFIT",
+    "target": "fit",
+    "features": [
+        "age",
+        "height_cm",
+        "weight_kg",
+        "body_type",
+        "bust_size",
+        "category",
+        "size",
+        "rating",
+        "rented_for"
+    ],
+    "numeric_features": [
+        "age",
+        "height_cm",
+        "weight_kg",
+        "size",
+        "rating"
+    ],
+    "categorical_features": [
+        "body_type",
+        "bust_size",
+        "category",
+        "rented_for"
+    ],
+    "best_model": "Random Forest",
+    "models_compared": [
+        "Logistic Regression",
+        "Random Forest",
+        "Gradient Boosting"
+    ],
+    "model_results": {
+        "Logistic Regression": {
+            "accuracy": 0.4399,
+            "precision": 0.44,
+            "recall": 0.4399,
+            "f1_score": 0.4368
+        },
+        "Random Forest": {
+            "accuracy": 0.4604,
+            "precision": 0.4581,
+            "recall": 0.4604,
+            "f1_score": 0.4586
+        },
+        "Gradient Boosting": {
+            "accuracy": 0.4462,
+            "precision": 0.4422,
+            "recall": 0.4462,
+            "f1_score": 0.4421
+        }
+    },
+    "classification_report": {
+        "fit": {
+            "precision": 0.41578947368421054,
+            "recall": 0.37264150943396224,
+            "f1-score": 0.39303482587064675,
+            "support": 212.0
+        },
+        "large": {
+            "precision": 0.4642857142857143,
+            "recall": 0.4789473684210526,
+            "f1-score": 0.47150259067357514,
+            "support": 190.0
+        },
+        "small": {
+            "precision": 0.491869918699187,
+            "recall": 0.5260869565217391,
+            "f1-score": 0.5084033613445378,
+            "support": 230.0
+        },
+        "accuracy": 0.46044303797468356,
+        "macro avg": {
+            "precision": 0.45731503555637065,
+            "recall": 0.4592252781255846,
+            "f1-score": 0.4576469259629199,
+            "support": 632.0
+        },
+        "weighted avg": {
+            "precision": 0.45805654341163193,
+            "recall": 0.46044303797468356,
+            "f1-score": 0.45861020319905077,
+            "support": 632.0
+        }
+    },
+    "confusion_matrix": [
+        [
+            79,
+            55,
+            78
+        ],
+        [
+            52,
+            91,
+            47
+        ],
+        [
+            59,
+            50,
+            121
+        ]
+    ],
+    "training_rows": 2526,
+    "testing_rows": 632,
+    "total_rows": 3158,
+    "random_state": 42
+}

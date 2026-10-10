@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm --prefix mobile install --no-audit --no-fund",
+  "buildCommand": "npm --prefix mobile run build:web",
+  "outputDirectory": "mobile/dist",
+  "cleanUrls": true,
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 300,
+      "excludeFiles": "{mobile/**,mock/**,Icon/**,docs/**,references/**,model/frontend/**,model/scripts/**,model/api/**,data/training/**,**/node_modules/**,**/__pycache__/**}"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api/index" }
+  ]
+}

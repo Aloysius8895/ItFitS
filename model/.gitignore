@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python cache
+.pytest_cache/
+.mypy_cache/
+
+# Logs
+*.log
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment variables
+.env
+.env.*
+
+# Temporary files
+*.tmp
+*.temp
+
+# Model training temporary files
+*.joblib
+*.pickle
+
+# Keep trained FLOWFIT model
+!models/fit_model.pkl
+!models/model_metadata.json
+
+# Large dataset files
+data/raw/*.json
+data/clean/*.csv
+
+# Trained model artifacts
+models/*.pkl
+
+# Do not commit unnecessary datasets if you want a lightweight repo
+# Uncomment these if the dataset is too large for GitHub:
+# data/raw/*.json
+# data/clean/*.csv
+# Secrets and local review data
+.env
+data/feedback/
+models/versions/
